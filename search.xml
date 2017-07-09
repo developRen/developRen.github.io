@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title><![CDATA[CocoaPod工作原理]]></title>
+      <url>/2017/07/09/CocoaPod%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
+      <content type="html"><![CDATA[<p><img src="/2017/07/09/CocoaPod工作原理/CocoaPod工作原理.png" alt="&quot;CocoaPod工作原理思维导图&quot;"> </p>
+]]></content>
+      
+        <categories>
+            
+            <category> 工具 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> CocoaPod </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[OC和Swift的单例模式]]></title>
       <url>/2017/07/06/OC%E5%92%8CSwift%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<p>单例模式是iOS开发中常用的设计模式，可以保证一个类只有一个对象实例。<br><a id="more"></a><br>在Objective-C中单例常用的写法：</p>
