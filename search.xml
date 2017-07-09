@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[CocoaPod工作原理]]></title>
       <url>/2017/07/09/CocoaPod%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
-      <content type="html"><![CDATA[<p><img src="/2017/07/09/CocoaPod工作原理/CocoaPod工作原理.png" alt="&quot;CocoaPod工作原理思维导图&quot;"> </p>
+      <content type="html"><![CDATA[<p><img src="/2017/07/09/CocoaPod工作原理/CocoaPod工作原理.png" alt="&quot;CocoaPod工作原理图解&quot;"><br><a id="more"></a></p>
 ]]></content>
       
         <categories>
@@ -26,8 +26,10 @@
     <entry>
       <title><![CDATA[OC和Swift的单例模式]]></title>
       <url>/2017/07/06/OC%E5%92%8CSwift%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
-      <content type="html"><![CDATA[<p>单例模式是iOS开发中常用的设计模式，可以保证一个类只有一个对象实例。<br><a id="more"></a><br>在Objective-C中单例常用的写法：</p>
+      <content type="html"><![CDATA[<p>单例模式是iOS开发中常用的设计模式，可以保证一个类只有一个对象实例。  </p>
+<p>在Objective-C中单例常用的写法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@implementation Manager</div><div class="line">+ (instancetype) shareManager &#123;</div><div class="line">    static Manager* staticInstance = nil;</div><div class="line">    </div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        staticInstance = [[self alloc] init];</div><div class="line">    &#125;) ;</div><div class="line">    </div><div class="line">    return staticInstance;</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>使用GCD中的dispatch_once_t可以保证里面的代码只被调用一次。  </p>
 <p>在Swift 3.0 单例推荐写法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">class Manager &#123;</div><div class="line">    static let shared = Manager()</div><div class="line">    private init()&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -56,8 +58,7 @@
     <entry>
       <title><![CDATA[Hello World,Goodbey HDU]]></title>
       <url>/2017/06/14/Hello-World-Goodby-HDU/</url>
-      <content type="html"><![CDATA[<p><img src="/2017/06/14/Hello-World-Goodby-HDU/001.png" alt="&quot;我们毕业啦&quot;"> </p>
-<p>打算写这篇文章很久了，总在起笔时欲言又止，脑海晃过一个个画面，不知该从何说起。</p>
+      <content type="html"><![CDATA[<p><img src="/2017/06/14/Hello-World-Goodby-HDU/001.png" alt="&quot;我们毕业啦&quot;"><br><a id="more"></a><br>打算写这篇文章很久了，总在起笔时欲言又止，脑海晃过一个个画面，不知该从何说起。</p>
 <p>不如，从头开始。  </p>
 <p>我记得那是一个下雨的日子，江南常有的雨天，天真的少年就这样闯进了文一路的杭电。<br>也许大学是从梧桐树斑驳光影下的军训开始的，也许是从工字楼213五个人初见开始的，也许是从第一行C代码”Hello World”开始的。 </p>
 <p>就在懵懵懂懂中开始了。</p>
