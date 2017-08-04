@@ -54,7 +54,7 @@
 <li>模块中的全局常量</li>
 <li>与其他模块通用类</li>
 </ul>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>[被误解的MVC和被神化的MVVM] (<a href="http://www.infoq.com/cn/articles/rethinking-mvc-mvvm" target="_blank" rel="external">http://www.infoq.com/cn/articles/rethinking-mvc-mvvm</a>)<br>[MVVM与Controller瘦身实践] (<a href="http://www.cocoachina.com/ios/20170710/19801.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20170710/19801.html</a>)<br>[杂谈: MVC/MVP/MVVM] (<a href="http://www.jianshu.com/p/eedbc820d40a" target="_blank" rel="external">http://www.jianshu.com/p/eedbc820d40a</a>)<br>[浅谈 MVC、MVP 和 MVVM 架构模式] (<a href="http://www.cocoachina.com/ios/20170717/19884.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20170717/19884.html</a>)</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://www.infoq.com/cn/articles/rethinking-mvc-mvvm" target="_blank" rel="external">被误解的MVC和被神化的MVVM</a><br><a href="http://www.cocoachina.com/ios/20170710/19801.html" target="_blank" rel="external">MVVM与Controller瘦身实践</a><br><a href="http://www.jianshu.com/p/eedbc820d40a" target="_blank" rel="external">杂谈: MVC/MVP/MVVM</a><br><a href="http://www.cocoachina.com/ios/20170717/19884.html" target="_blank" rel="external">浅谈 MVC、MVP 和 MVVM 架构模式</a></p>
 ]]></content>
       
         <categories>
