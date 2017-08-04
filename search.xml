@@ -36,8 +36,10 @@
 <li>将URL通过宏封装在一个头文件中。</li>
 <li>将模块中的所有网络请求封装在一个类中。</li>
 </ul>
+<p>更多网络请求封装、错误处理、网络状态判读请查阅另一篇文章 <a href="">AFNetwork封装</a></p>
 <h3 id="界面拼装层"><a href="#界面拼装层" class="headerlink" title="界面拼装层"></a>界面拼装层</h3><p>构造专门的 UIView 的子类，来负责控件的拼装。不过稍微麻烦一些的是，需要把这些控件的事件回调先接管，再都一一暴露回 ViewController。</p>
-<h3 id="ViewModel层"><a href="#ViewModel层" class="headerlink" title="ViewModel层"></a>ViewModel层</h3><p>View 只接受 ViewModel 处理完之后的数据，而 ViewController 只需要传递 ViewModel 处理后的数据。</p>
+<h3 id="ViewModel层"><a href="#ViewModel层" class="headerlink" title="ViewModel层"></a>ViewModel层</h3><p>View 只接受 ViewModel 处理完之后的数据，而 ViewController 只需要传递 ViewModel 处理后的数据。  </p>
+<p>更多关于 ViewModel 介绍请查阅 <a href="https://objccn.io/issue-13-1/" target="_blank" rel="external">MVVM 介绍</a></p>
 <h3 id="推送层"><a href="#推送层" class="headerlink" title="推送层"></a>推送层</h3><ul>
 <li>APNS推送</li>
 <li>Socket推送</li>
@@ -52,6 +54,7 @@
 <li>模块中的全局常量</li>
 <li>与其他模块通用类</li>
 </ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>[被误解的MVC和被神化的MVVM] (<a href="http://www.infoq.com/cn/articles/rethinking-mvc-mvvm" target="_blank" rel="external">http://www.infoq.com/cn/articles/rethinking-mvc-mvvm</a>)<br>[MVVM与Controller瘦身实践] (<a href="http://www.cocoachina.com/ios/20170710/19801.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20170710/19801.html</a>)<br>[杂谈: MVC/MVP/MVVM] (<a href="http://www.jianshu.com/p/eedbc820d40a" target="_blank" rel="external">http://www.jianshu.com/p/eedbc820d40a</a>)<br>[浅谈 MVC、MVP 和 MVVM 架构模式] (<a href="http://www.cocoachina.com/ios/20170717/19884.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20170717/19884.html</a>)</p>
 ]]></content>
       
         <categories>
