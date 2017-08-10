@@ -5,7 +5,8 @@
     <entry>
       <title><![CDATA[AFNetworking 源码阅读笔记]]></title>
       <url>/2017/08/08/AFNetworking-%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</url>
-      <content type="html"><![CDATA[<p><img src="/2017/08/08/AFNetworking-阅读笔记/AFNetworking.png" alt=""> </p>
+      <content type="html"><![CDATA[<p>提高自己代码水平最有效的方式就是阅读各路大神的代码，于是在多次蠢蠢欲动之后开始了阅读AFNetworking框架的计划，笔记如下。</p>
+<p><img src="/2017/08/08/AFNetworking-阅读笔记/AFNetworking.png" alt=""> </p>
 <a id="more"></a>
 <h2 id="框架中用到的一些宏"><a href="#框架中用到的一些宏" class="headerlink" title="框架中用到的一些宏"></a>框架中用到的一些宏</h2><h3 id="DEPRECATED-ATTRIBUTE"><a href="#DEPRECATED-ATTRIBUTE" class="headerlink" title="DEPRECATED_ATTRIBUTE"></a><code>DEPRECATED_ATTRIBUTE</code></h3><p>在声明属性或者方法时，在后面加上 <code>DEPRECATED_ATTRIBUTE</code>，可以用来标识该方法将会被慢慢弃用属性或接口的，当我们不想让别人再用这属性或接口时，可以加上这个宏，如果别人仍然调用，则编译器会报警告。  </p>
 <p>此宏常用于框架迭代时，新旧方法和属性替换的过渡阶段。 （⚠️ 必需放在”;”前）</p>
