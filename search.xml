@@ -3,6 +3,31 @@
   
     
     <entry>
+      <title><![CDATA[我说所有的酒 都不如你]]></title>
+      <url>/2017/08/16/%E6%88%91%E8%AF%B4%E6%89%80%E6%9C%89%E7%9A%84%E9%85%92-%E9%83%BD%E4%B8%8D%E5%A6%82%E4%BD%A0/</url>
+      <content type="html"><![CDATA[<p><img src="/2017/08/16/我说所有的酒-都不如你/0001.jpeg" alt=""></p>
+<a id="more"></a>
+<h3 id="《春风十里》"><a href="#《春风十里》" class="headerlink" title="《春风十里》"></a>《春风十里》</h3><p>我在二环路的里边 想着你<br>你在远方的山上 春风十里<br>今天的风吹向你 下了雨<br>我说所有的酒 都不如你  </p>
+<p>我在鼓楼的夜色中 为你唱花香自来<br>在别处 沉默相遇和期待<br>飞机飞过 车水马龙的城市<br>千里之外 不离开  </p>
+<p>把所有的春天 都揉进了一个清晨<br>把所有停不下的言语变成秘密 关上了门<br>莫名的的情愫啊 请问 谁来将它带走呢<br>只好把岁月化成歌 留在山河  </p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="50" src="http://up.mcyt.net/md5/53/OTk0ODA0Nw_Qq4329912.mp3"></iframe>]]></content>
+      
+        <categories>
+            
+            <category> 杂记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 春风十里 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[AFNetworking 源码阅读笔记]]></title>
       <url>/2017/08/08/AFNetworking-%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<p>提高代码水平最有效的方式就是阅读各路大神的代码<br>公认AFNetworking在iOS界就像是神一般的存在<br>在多次蠢蠢欲动后开始了阅读AFNetworking框架的计划  </p>
@@ -52,6 +77,7 @@
 <p><a href="#FOUNDATION_EXPORT"><code>FOUNDATION_EXPORT</code> </a> 的用法请查看<code>框架中用到的一些宏</code>模块。<br><a href="http://blog.csdn.net/qq_32010299/article/details/51836806" target="_blank" rel="external">关于FOUNDATION_EXTERN、extern、FOUNDATION_EXPORT、extern “C”的区别</a></p>
 <p>通常会写一个方法通过<code>枚举</code>和<code>switch</code>返回对应的字符串，在<code>AFNetworking</code>框架中看到一种骚气的操作。</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在.h声明</span></div><div class="line">FOUNDATION_EXPORT <span class="built_in">NSString</span> * AFStringFromNetworkReachabilityStatus(AFNetworkReachabilityStatus status);</div><div class="line"></div><div class="line"><span class="comment">// 在.m实现</span></div><div class="line"><span class="built_in">NSString</span> * AFStringFromNetworkReachabilityStatus(AFNetworkReachabilityStatus status) &#123;</div><div class="line">    <span class="keyword">switch</span> (status) &#123;</div><div class="line">        <span class="keyword">case</span> AFNetworkReachabilityStatusNotReachable:</div><div class="line">            <span class="keyword">return</span> <span class="built_in">NSLocalizedStringFromTable</span>(<span class="string">@"Not Reachable"</span>, <span class="string">@"AFNetworking"</span>, <span class="literal">nil</span>);</div><div class="line">        <span class="keyword">case</span> AFNetworkReachabilityStatusReachableViaWWAN:</div><div class="line">            <span class="keyword">return</span> <span class="built_in">NSLocalizedStringFromTable</span>(<span class="string">@"Reachable via WWAN"</span>, <span class="string">@"AFNetworking"</span>, <span class="literal">nil</span>);</div><div class="line">        <span class="keyword">case</span> AFNetworkReachabilityStatusReachableViaWiFi:</div><div class="line">            <span class="keyword">return</span> <span class="built_in">NSLocalizedStringFromTable</span>(<span class="string">@"Reachable via WiFi"</span>, <span class="string">@"AFNetworking"</span>, <span class="literal">nil</span>);</div><div class="line">        <span class="keyword">case</span> AFNetworkReachabilityStatusUnknown:</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">return</span> <span class="built_in">NSLocalizedStringFromTable</span>(<span class="string">@"Unknown"</span>, <span class="string">@"AFNetworking"</span>, <span class="literal">nil</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 调用</span></div><div class="line">AFStringFromNetworkReachabilityStatus(<span class="keyword">self</span>.networkReachabilityStatus);</div></pre></td></tr></table></figure>
+<p><a href="http://www.jianshu.com/p/064b5b82a3a2" target="_blank" rel="external">iOS常量(const)、enum、宏(#define)的使用场景及区别</a></p>
 <h2 id="本地化"><a href="#本地化" class="headerlink" title="本地化"></a>本地化</h2><p>TO-DO </p>
 <h2 id="类中的私有方法"><a href="#类中的私有方法" class="headerlink" title="类中的私有方法"></a>类中的私有方法</h2><p>在AFNetworking框架中把私有方法写成<code>static void funcName()</code> 这样的<code>C函数</code>，并且写在<code>@interface</code>上方。</p>
 <ul>
