@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[OC 常量与变量]]></title>
       <url>/2017/09/18/OC%E5%B8%B8%E9%87%8F%E4%B8%8E%E5%8F%98%E9%87%8F/</url>
-      <content type="html"><![CDATA[<p><img src="/2017/09/18/OC常量与变量/OC常量与变量.jpeg" alt=""> </p>
+      <content type="html"><![CDATA[<p><img src="/2017/09/18/OC常量与变量/OC常量与变量.png" alt=""> </p>
 <a id="more"></a>
 <h2 id="全局常量的常见用法"><a href="#全局常量的常见用法" class="headerlink" title="全局常量的常见用法"></a>全局常量的常见用法</h2><p>通过 <code>FOUNDATION_EXPORT</code> 定义全局常量</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// .h文件</div><div class="line">FOUNDATION_EXPORT NSString * const AFNetworkingReachabilityNotificationStatusItem;</div><div class="line"></div><div class="line">// .m文件</div><div class="line">NSString * const AFNetworkingReachabilityDidChangeNotification = @&quot;com.alamofire.networking.reachability.change&quot;;</div></pre></td></tr></table></figure>
@@ -50,7 +50,7 @@
     <entry>
       <title><![CDATA[我说所有的酒 都不如你]]></title>
       <url>/2017/08/16/%E6%88%91%E8%AF%B4%E6%89%80%E6%9C%89%E7%9A%84%E9%85%92-%E9%83%BD%E4%B8%8D%E5%A6%82%E4%BD%A0/</url>
-      <content type="html"><![CDATA[<p><img src="/2017/08/16/我说所有的酒-都不如你/0001.jpeg" alt=""></p>
+      <content type="html"><![CDATA[<p><img src="/2017/08/16/我说所有的酒-都不如你/0001.png" alt=""></p>
 <a id="more"></a>
 <h3 id="《春风十里》"><a href="#《春风十里》" class="headerlink" title="《春风十里》"></a>《春风十里》</h3><p>– 鹿先生乐队  </p>
 <p>我在二环路的里边 想着你<br>你在远方的山上 春风十里<br>今天的风吹向你 下了雨<br>我说所有的酒 都不如你  </p>
