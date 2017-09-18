@@ -3,15 +3,18 @@
   
     
     <entry>
-      <title><![CDATA[OC 常量与变量]]></title>
+      <title><![CDATA[OC 常量]]></title>
       <url>/2017/09/18/OC%E5%B8%B8%E9%87%8F%E4%B8%8E%E5%8F%98%E9%87%8F/</url>
       <content type="html"><![CDATA[<p><img src="/2017/09/18/OC常量与变量/OC常量与变量.png" alt=""> </p>
 <a id="more"></a>
 <h2 id="全局常量的常见用法"><a href="#全局常量的常见用法" class="headerlink" title="全局常量的常见用法"></a>全局常量的常见用法</h2><p>通过 <code>FOUNDATION_EXPORT</code> 定义全局常量</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// .h文件</div><div class="line">FOUNDATION_EXPORT NSString * const AFNetworkingReachabilityNotificationStatusItem;</div><div class="line"></div><div class="line">// .m文件</div><div class="line">NSString * const AFNetworkingReachabilityDidChangeNotification = @&quot;com.alamofire.networking.reachability.change&quot;;</div></pre></td></tr></table></figure>
 <p>通过 <code>extern</code> 和 <code>const</code> 定义全局常量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// .h文件</div><div class="line">extern NSString * const YLConstApplyResultForRefuseIcon;</div><div class="line"></div><div class="line">// .m文件</div><div class="line">NSString * const YLConstApplyResultForRefuseIcon    = @&quot;approval-refuse&quot;;</div></pre></td></tr></table></figure>
-<h2 id="局部变量的常见用法"><a href="#局部变量的常见用法" class="headerlink" title="局部变量的常见用法"></a>局部变量的常见用法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// 保证局部变量永远只初始化一次，在程序的运行过程中永远只有一份内存</div><div class="line">static XYGCDAsyncSocketManager *staticInstance = nil;</div><div class="line">static dispatch_once_t onceToken;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// .h文件</div><div class="line">extern NSString * const YLConstApplyResultForRefuseIcon;</div><div class="line"></div><div class="line">// .m文件</div><div class="line">NSString * const YLConstApplyResultForRefuseIcon = @&quot;approval-refuse&quot;;</div></pre></td></tr></table></figure>
+<h2 id="局部常量的常见用法"><a href="#局部常量的常见用法" class="headerlink" title="局部常量的常见用法"></a>局部常量的常见用法</h2><p>方法内的常量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// 保证局部变量永远只初始化一次，在程序的运行过程中永远只有一份内存</div><div class="line">static XYGCDAsyncSocketManager *staticInstance = nil;</div><div class="line">static dispatch_once_t onceToken;</div></pre></td></tr></table></figure>
+<p>方法体外，类内部使用的常量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">static NSString * const kAFMultipartFormCRLF = @&quot;\r\n&quot;;</div></pre></td></tr></table></figure>
 <h2 id="const修饰符说明"><a href="#const修饰符说明" class="headerlink" title="const修饰符说明"></a>const修饰符说明</h2><ul>
 <li>const用来修饰右边的基本变量或指针变量</li>
 <li>被修饰的变量只读，不能被修改</li>
@@ -21,6 +24,10 @@
 <li>在方法体内，声明为静态的变量（局部静态变量）。保证局部变量永远只初始化一次，在程序的运行过程中永远只有一份内存，生命周期类似全局变量了，但是作用域不变。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 单例</div><div class="line">+ (nonnull instancetype)sharedInstance &#123;</div><div class="line">    static XYGCDAsyncSocketManager *staticInstance = nil;</div><div class="line">    </div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        staticInstance = [[self alloc] init];</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    return staticInstance;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>在方法体外，类内部使用的常量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">static NSString * const kAFMultipartFormCRLF = @&quot;\r\n&quot;;</div></pre></td></tr></table></figure>
 <h2 id="extern修饰符说明"><a href="#extern修饰符说明" class="headerlink" title="extern修饰符说明"></a>extern修饰符说明</h2><ul>
 <li>声明外部全局变量,这里需要特别注意extern只能声明，不能用于实现。</li>
 </ul>
