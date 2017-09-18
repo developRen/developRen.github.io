@@ -196,7 +196,9 @@ s" target="_blank" rel="external">“-相关命令” 列表</a><br><a href="htt
     <entry>
       <title><![CDATA[循环引用的坑]]></title>
       <url>/2017/08/07/%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E7%9A%84%E5%9D%91/</url>
-      <content type="html"><![CDATA[<p>循环引用是iOS开发中经常遇到的问题，对App有潜在的危害，会使引起内存消耗过高，性能变差和Crash等问题。<br><a id="more"></a></p>
+      <content type="html"><![CDATA[<p><img src="/2017/08/07/循环引用的坑/循环引用的坑.png" alt=""> </p>
+<a id="more"></a>
+<p>循环引用是iOS开发中经常遇到的问题，对App有潜在的危害，会使引起内存消耗过高，性能变差和Crash等问题。  </p>
 <h2 id="Delegate"><a href="#Delegate" class="headerlink" title="Delegate"></a>Delegate</h2><p>代理协议是一个最典型的场景，需要你使用弱引用来避免循环引用。ARC时代，需要将代理声明为weak是一个即好又安全的做法。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic, weak) id &lt;myDelegate&gt; delegate;</div></pre></td></tr></table></figure>
 <h2 id="NSTimer"><a href="#NSTimer" class="headerlink" title="NSTimer"></a>NSTimer</h2><p>在退出控制器时关闭计时器。</p>
@@ -241,9 +243,9 @@ s" target="_blank" rel="external">“-相关命令” 列表</a><br><a href="htt
     <entry>
       <title><![CDATA[探寻最适合业务的架构]]></title>
       <url>/2017/08/03/%E6%8E%A2%E5%AF%BB%E6%9C%80%E9%80%82%E5%90%88%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%9E%B6%E6%9E%84/</url>
-      <content type="html"><![CDATA[<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>在 iOS 开发中，MVC（Model View Controller）是构建iOS App的标准模式，是苹果推荐的一个用来组织代码的权威范式。</p>
-<p><img src="/2017/08/03/探寻最适合业务的架构/MVC框架.png" alt="MVC框架"> </p>
+      <content type="html"><![CDATA[<p><img src="/2017/08/03/探寻最适合业务的架构/探寻最适合业务的架构.png" alt=""> </p>
 <a id="more"></a>
+<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>在 iOS 开发中，MVC（Model View Controller）是构建iOS App的标准模式，是苹果推荐的一个用来组织代码的权威范式。</p>
 <p>所谓的 MVC 是指：  </p>
 <ul>
 <li>Model: 数据的拥有者，实现具体的业务逻辑。  </li>
