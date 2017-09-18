@@ -117,6 +117,11 @@
 <p><span id="nullable和nonnull"></span></p>
 <p>如果需要每个属性或每个方法都去指定 <code>nonnull</code> 和 <code>nullable</code> ，将是一件非常繁琐的事。苹果为了减轻我们的工作量，专门提供了两个宏： <code>NS_ASSUME_NONNULL_BEGIN</code> 和 <code>NS_ASSUME_NONNULL_END</code> 。在这两个宏之间的代码，所有简单指针对象都被假定为 <code>nonnull</code> ，因此我们只需要去指定那些 <code>nullable</code> 指针对象即可。AFNetworking框架中做了如此的操作。</p>
 <p><a href="http://blog.csdn.net/bravegogo/article/details/52458403" target="_blank" rel="external"><code>nullable</code>、<code>__nullable</code>、<code>_Nullable</code> 究竟有什么区别呢？</a></p>
+<h2 id="amp-与"><a href="#amp-与" class="headerlink" title="&amp; 与 @"></a><code>&amp;</code> 与 <code>@</code></h2><ul>
+<li><code>&amp;</code> 表示取地址的意思，和C语言一样</li>
+<li><code>@</code> 表示字面量</li>
+</ul>
+<p><a href="http://www.jianshu.com/p/e89bd39e4849" target="_blank" rel="external">ios中的字面量语法</a></p>
 <h2 id="name和-pragma-mark"><a href="#name和-pragma-mark" class="headerlink" title="@name和 #pragma mark"></a><code>@name</code>和 <code>#pragma mark</code></h2><p><code>AFNetworking</code>作者使用了<code>@name</code>来分隔 <code>.h</code> 文件中中不同功能代码。在 <code>.m</code> 文件中用<code>#pragma mark</code>分隔不同功能代码。</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///---------------------</span></div><div class="line"><span class="comment">/// @name Initialization</span></div><div class="line"><span class="comment">///---------------------</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - NSCopying</span></div></pre></td></tr></table></figure>
 <h2 id="pragma-clang-diagnostic-ignored-用法"><a href="#pragma-clang-diagnostic-ignored-用法" class="headerlink" title="#pragma clang diagnostic ignored 用法"></a><code>#pragma clang diagnostic ignored</code> 用法</h2><p>首先, #pragma 本质上也是声明，一般常用的功能就是打注释、尤其是分段注释,但是#pragma 另外一个强大的功能就是处理编译器警告，用的时候可能就没上一个,功能用的那么多，在代码中处理警告却是极其高效的方法。</p>
