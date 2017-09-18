@@ -341,10 +341,11 @@ s" target="_blank" rel="external">“-相关命令” 列表</a><br><a href="htt
     <entry>
       <title><![CDATA[OC和Swift的单例模式]]></title>
       <url>/2017/07/06/OC%E5%92%8CSwift%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
-      <content type="html"><![CDATA[<p>单例模式是iOS开发中常用的设计模式，可以保证一个类只有一个对象实例。  </p>
+      <content type="html"><![CDATA[<p><img src="/2017/07/06/OC和Swift的单例模式/OC和Swift的单例模式.png" alt=""></p>
+<a id="more"></a>
+<p>单例模式是iOS开发中常用的设计模式，可以保证一个类只有一个对象实例。  </p>
 <p>在Objective-C中单例常用的写法：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Manager</span></span></div><div class="line">+ (<span class="keyword">instancetype</span>) shareManager &#123;</div><div class="line">    <span class="keyword">static</span> Manager* staticInstance = <span class="literal">nil</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</div><div class="line">        staticInstance = [[<span class="keyword">self</span> alloc] init];</div><div class="line">    &#125;) ;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> staticInstance;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<a id="more"></a>
 <p>使用GCD中的dispatch_once_t可以保证里面的代码只被调用一次。  </p>
 <p>在Swift 3.0 单例推荐写法：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Manager</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">let</span> shared = <span class="type">Manager</span>()</div><div class="line">    <span class="keyword">private</span> <span class="keyword">init</span>()&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
