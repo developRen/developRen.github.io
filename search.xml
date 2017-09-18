@@ -124,15 +124,15 @@
 <p><a href="http://www.jianshu.com/p/e89bd39e4849" target="_blank" rel="external">ios中的字面量语法</a></p>
 <h2 id="name和-pragma-mark"><a href="#name和-pragma-mark" class="headerlink" title="@name和 #pragma mark"></a><code>@name</code>和 <code>#pragma mark</code></h2><p><code>AFNetworking</code>作者使用了<code>@name</code>来分隔 <code>.h</code> 文件中中不同功能代码。在 <code>.m</code> 文件中用<code>#pragma mark</code>分隔不同功能代码。</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///---------------------</span></div><div class="line"><span class="comment">/// @name Initialization</span></div><div class="line"><span class="comment">///---------------------</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - NSCopying</span></div></pre></td></tr></table></figure>
-<h2 id="pragma-clang-diagnostic-ignored-用法"><a href="#pragma-clang-diagnostic-ignored-用法" class="headerlink" title="#pragma clang diagnostic ignored 用法"></a><code>#pragma clang diagnostic ignored</code> 用法</h2><p>首先, #pragma 本质上也是声明，一般常用的功能就是打注释、尤其是分段注释,但是#pragma 另外一个强大的功能就是处理编译器警告，用的时候可能就没上一个,功能用的那么多，在代码中处理警告却是极其高效的方法。</p>
-<p>其中 clang diagnostic 便是#pragma 第一个功能常用的命令，步骤如下:</p>
+<h2 id="pragma-clang-diagnostic-ignored"><a href="#pragma-clang-diagnostic-ignored" class="headerlink" title="#pragma clang diagnostic ignored"></a><code>#pragma clang diagnostic ignored</code></h2><p>首先, <code>#pragma</code> 本质上也是声明，一般常用的功能就是打注释、尤其是分段注释,但是 <code>#pragma</code> 另外一个强大的功能就是处理编译器警告，用的时候可能就没上一个,功能用的那么多，在代码中处理警告却是极其高效的方法。</p>
+<p>其中 <code>clang diagnostic</code> 便是 <code>#pragma</code> 第一个功能常用的命令，步骤如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#pragma clang diagnostic push  </div><div class="line">#pragma clang diagnostic ignored &quot;-相关命令&quot;  </div><div class="line">// 你自己的代码  </div><div class="line">#pragma clang diagnostic pop</div></pre></td></tr></table></figure>
 <p>常用 “-相关命令”  :</p>
 <ul>
-<li>方法弃用告警 “-Wdeprecated-declarations”  </li>
-<li>不兼容指针类型 “-Wincompatible-pointer-types”  </li>
-<li>循环引用 “-Warc-retain-cycles”  </li>
-<li>未使用变量 “-Wunused-variable”     </li>
+<li>方法弃用告警 <code>&quot;-Wdeprecated-declarations&quot;</code>  </li>
+<li>不兼容指针类型 <code>&quot;-Wincompatible-pointer-types&quot;</code>  </li>
+<li>循环引用 <code>&quot;-Warc-retain-cycles&quot;</code>  </li>
+<li>未使用变量 <code>&quot;-Wunused-variable&quot;</code>     </li>
 </ul>
 <p><a href="http://clang.llvm.org/docs/UsersManual.html#diagnostics_pragma
 s" target="_blank" rel="external">“-相关命令” 列表</a><br><a href="http://nshipster.cn/pragma/" target="_blank" rel="external">#pragma</a></p>
