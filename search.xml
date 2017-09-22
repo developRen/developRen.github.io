@@ -12,6 +12,15 @@
 <h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><h3 id="快速搜索项目中的文件"><a href="#快速搜索项目中的文件" class="headerlink" title="快速搜索项目中的文件"></a>快速搜索项目中的文件</h3><p><code>shift + command + o</code></p>
 <h3 id="打开对应文件的目录"><a href="#打开对应文件的目录" class="headerlink" title="打开对应文件的目录"></a>打开对应文件的目录</h3><p><code>shift + command + j</code></p>
 <h3 id="方法名中：上下对齐排版"><a href="#方法名中：上下对齐排版" class="headerlink" title="方法名中：上下对齐排版"></a>方法名中<code>：</code>上下对齐排版</h3><p><code>control + i</code></p>
+<h2 id="开启无线调试"><a href="#开启无线调试" class="headerlink" title="开启无线调试"></a>开启无线调试</h2><p>前提： <code>iOS 11 + Xcode 9</code>  以上设备</p>
+<p>步骤： </p>
+<ul>
+<li>用数据线链接设备</li>
+<li><code>Window</code> -&gt; <code>Device and Simulators</code></li>
+<li>找到对应设备，勾选 <code>Connect via network</code></li>
+<li>断开数据线，运行即可。</li>
+</ul>
+<p>只需操作一次，之后开启Xcode会自动连接。</p>
 <p>持续整理更新。。。</p>
 ]]></content>
       
