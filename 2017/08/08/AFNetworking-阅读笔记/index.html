@@ -79,18 +79,15 @@
 
 
 
-<meta name="description" content="提高代码水平最有效的方式就是阅读各路大神的代码公认AFNetworking在iOS界就像是神一般的存在在多次蠢蠢欲动后开始了阅读AFNetworking框架的计划   笔记如下，持续更新">
 <meta name="keywords" content="OC,AFNetworking">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AFNetworking 源码阅读笔记">
 <meta property="og:url" content="https://developren.github.io/2017/08/08/AFNetworking-阅读笔记/index.html">
 <meta property="og:site_name" content="一杰的博客">
-<meta property="og:description" content="提高代码水平最有效的方式就是阅读各路大神的代码公认AFNetworking在iOS界就像是神一般的存在在多次蠢蠢欲动后开始了阅读AFNetworking框架的计划   笔记如下，持续更新">
 <meta property="og:image" content="https://developren.github.io/2017/08/08/AFNetworking-阅读笔记/AFNetworking.png">
-<meta property="og:updated_time" content="2017-10-10T06:12:48.329Z">
+<meta property="og:updated_time" content="2017-11-12T01:01:51.754Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AFNetworking 源码阅读笔记">
-<meta name="twitter:description" content="提高代码水平最有效的方式就是阅读各路大神的代码公认AFNetworking在iOS界就像是神一般的存在在多次蠢蠢欲动后开始了阅读AFNetworking框架的计划   笔记如下，持续更新">
 <meta name="twitter:image" content="https://developren.github.io/2017/08/08/AFNetworking-阅读笔记/AFNetworking.png">
 
 
@@ -333,9 +330,7 @@
       
 
       
-        <p>提高代码水平最有效的方式就是阅读各路大神的代码<br>公认AFNetworking在iOS界就像是神一般的存在<br>在多次蠢蠢欲动后开始了阅读AFNetworking框架的计划  </p>
-<p>笔记如下，持续更新</p>
-<p><img src="/2017/08/08/AFNetworking-阅读笔记/AFNetworking.png" alt=""> </p>
+        <p><img src="/2017/08/08/AFNetworking-阅读笔记/AFNetworking.png" alt=""> </p>
 <a id="more"></a>
 <h2 id="框架中用到的一些宏"><a href="#框架中用到的一些宏" class="headerlink" title="框架中用到的一些宏"></a>框架中用到的一些宏</h2><h3 id="DEPRECATED-ATTRIBUTE"><a href="#DEPRECATED-ATTRIBUTE" class="headerlink" title="DEPRECATED_ATTRIBUTE"></a><code>DEPRECATED_ATTRIBUTE</code></h3><p>在声明属性或者方法时，在后面加上 <code>DEPRECATED_ATTRIBUTE</code>，可以用来标识该方法将会被慢慢弃用属性或接口的，当我们不想让别人再用这属性或接口时，可以加上这个宏，如果别人仍然调用，则编译器会报警告。  </p>
 <p>此宏常用于框架迭代时，新旧方法和属性替换的过渡阶段。 （⚠️ 必需放在”;”前）</p>
@@ -416,9 +411,11 @@ s" target="_blank" rel="external">“-相关命令” 列表</a><br><a href="htt
 <li><code>__Require_XXX</code> 宏</li>
 </ul>
 <h2 id="continue、break、return的区别"><a href="#continue、break、return的区别" class="headerlink" title="continue、break、return的区别"></a>continue、break、return的区别</h2><ul>
-<li><code>break</code><br>  多用于循环语句，如<code>for</code>、<code>while</code> 、<code>switch</code>。当程序执行到<code>break</code>时在循环中表示结束整个循环,而且在多层嵌套中，一个break只能跳出一层循环。</li>
-<li><code>continue</code><br>  用于在循环体中进行跳转，当程序执行到continue时，表示忽略其后面的代码（或者说结束本次循环），继续执行下一次循环。  </li>
-<li><code>return</code><br>  表示从被调函数返回到主调函数继续执行，返回时可附带一个返回值，由return后面的参数指定。      </li>
+<li><code>break</code><br>多用于循环语句，如<code>for</code>、<code>while</code> 、<code>switch</code>。当程序执行到<code>break</code>时在循环中表示结束整个循环,而且在多层嵌套中，一个break只能跳出一层循环。<ul>
+<li><code>continue</code><br>用于在循环体中进行跳转，当程序执行到continue时，表示忽略其后面的代码（或者说结束本次循环），继续执行下一次循环。  </li>
+</ul>
+</li>
+<li><code>return</code><br>表示从被调函数返回到主调函数继续执行，返回时可附带一个返回值，由return后面的参数指定。      </li>
 </ul>
 <h2 id="HTTPS和HTTP"><a href="#HTTPS和HTTP" class="headerlink" title="HTTPS和HTTP"></a>HTTPS和HTTP</h2><p><a href="http://www.jianshu.com/p/650ad90bf563" target="_blank" rel="external">简单粗暴系列之HTTPS原理</a><br><a href="http://www.jianshu.com/p/5969bbb4af9f" target="_blank" rel="external">别说你会AFNetworking3.0/NSURLSession</a><br><a href="http://www.jianshu.com/p/4102b817ff2f" target="_blank" rel="external">正确使用AFNetworking的SSL保证网络安全</a><br><a href="http://www.jianshu.com/p/a9bca62d8dab" target="_blank" rel="external">与时俱进，HTTP/2下的iOS网络层架构设计</a><br><a href="http://www.jianshu.com/p/9c1979ef2a70" target="_blank" rel="external">移动基础设施的建设</a></p>
 <h2 id="NSSecureCoding"><a href="#NSSecureCoding" class="headerlink" title="NSSecureCoding"></a>NSSecureCoding</h2><p><a href="http://blog.jobbole.com/67655/" target="_blank" rel="external">使用NSSecureCoding协议进行对象编解码</a></p>
@@ -467,8 +464,8 @@ s" target="_blank" rel="external">“-相关命令” 列表</a><br><a href="htt
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08/16/我说所有的酒-都不如你/" rel="prev" title="我说所有的酒 都不如你">
-                我说所有的酒 都不如你 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/18/OC常量与变量/" rel="prev" title="OC 常量">
+                OC 常量 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -550,7 +547,7 @@ s" target="_blank" rel="external">“-相关命令” 列表</a><br><a href="htt
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -572,7 +569,7 @@ s" target="_blank" rel="external">“-相关命令” 列表</a><br><a href="htt
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
