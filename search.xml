@@ -9,20 +9,46 @@
 <a id="more"></a>
 <h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><h3 id="MARK-、TODO-、BUG"><a href="#MARK-、TODO-、BUG" class="headerlink" title="MARK 、TODO 、BUG"></a>MARK 、TODO 、BUG</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// MARK: -作记号内容</span></div><div class="line"><span class="comment">// <span class="doctag">TODO:</span> -需要完成的任务描述</span></div><div class="line"><span class="comment">// <span class="doctag">FIXME:</span> -需要修复BUG的描述</span></div></pre></td></tr></table></figure>
 <h3 id="添加警告"><a href="#添加警告" class="headerlink" title="添加警告"></a>添加警告</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#warning <span class="meta-string">"警告的描述"</span></span></div></pre></td></tr></table></figure>
-<h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><h3 id="shift-command-o"><a href="#shift-command-o" class="headerlink" title="shift + command + o"></a>shift + command + o</h3><p>快速搜索文件，以及搜索方法名定位方法实现代码</p>
-<h3 id="control-6"><a href="#control-6" class="headerlink" title="control + 6"></a>control + 6</h3><p>快速定位想编辑的方法</p>
+<h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><h3 id="shift-command-o"><a href="#shift-command-o" class="headerlink" title="shift + command + o"></a>shift + command + o</h3><blockquote>
+<p>快速搜索文件，以及搜索方法名定位方法实现代码</p>
+</blockquote>
+<h3 id="control-6"><a href="#control-6" class="headerlink" title="control + 6"></a>control + 6</h3><blockquote>
+<p>快速定位想编辑的方法</p>
 <p>列出当前文件中所有的方法，可以通过输入关键字来过滤</p>
-<h3 id="shift-command-j"><a href="#shift-command-j" class="headerlink" title="shift + command + j"></a>shift + command + j</h3><p>打开对应文件的目录</p>
-<h3 id="control-i"><a href="#control-i" class="headerlink" title="control + i"></a>control + i</h3><p>方法名中<code>：</code>上下对齐排版</p>
-<h3 id="option-command-左右键"><a href="#option-command-左右键" class="headerlink" title="option + command + 左右键"></a>option + command + 左右键</h3><p>收起 &amp; 展开 代码段</p>
-<h3 id="control-command-上下键"><a href="#control-command-上下键" class="headerlink" title="control + command + 上下键"></a>control + command + 上下键</h3><p>在.h和.m文件之间切换</p>
-<h3 id="command-return"><a href="#command-return" class="headerlink" title="command + return"></a>command + return</h3><p>切换成 standsrd editor</p>
-<h3 id="command-option-return"><a href="#command-option-return" class="headerlink" title="command + option + return"></a>command + option + return</h3><p>切换成 assistan editor</p>
-<h3 id="左侧、右侧、底部工具栏"><a href="#左侧、右侧、底部工具栏" class="headerlink" title="左侧、右侧、底部工具栏"></a>左侧、右侧、底部工具栏</h3><h4 id="command-shift-Y"><a href="#command-shift-Y" class="headerlink" title="command + shift + Y"></a>command + shift + Y</h4><p>切换底部 Console VIew 显示或者隐藏</p>
-<h4 id="command-0"><a href="#command-0" class="headerlink" title="command + 0"></a>command + 0</h4><p>切换左边导航区（Navigator）显示或者隐藏</p>
-<h4 id="command-option-0"><a href="#command-option-0" class="headerlink" title="command + option + 0"></a>command + option + 0</h4><p>切换右边工具区（Utility）显示或者隐藏</p>
-<h3 id="Tab栏"><a href="#Tab栏" class="headerlink" title="Tab栏"></a>Tab栏</h3><h4 id="command-T"><a href="#command-T" class="headerlink" title="command + T"></a>command + T</h4><p>新建一个Tab栏</p>
-<h4 id="command-shift-或者"><a href="#command-shift-或者" class="headerlink" title="command + shift + [ 或者 ]"></a>command + shift + [ 或者 ]</h4><p>Tab栏左右切换</p>
+</blockquote>
+<h3 id="shift-command-j"><a href="#shift-command-j" class="headerlink" title="shift + command + j"></a>shift + command + j</h3><blockquote>
+<p>打开对应文件的目录</p>
+</blockquote>
+<h3 id="control-i"><a href="#control-i" class="headerlink" title="control + i"></a>control + i</h3><blockquote>
+<p>方法名中<code>：</code>上下对齐排版</p>
+</blockquote>
+<h3 id="option-command-左右键"><a href="#option-command-左右键" class="headerlink" title="option + command + 左右键"></a>option + command + 左右键</h3><blockquote>
+<p>收起 &amp; 展开 代码段</p>
+</blockquote>
+<h3 id="control-command-上下键"><a href="#control-command-上下键" class="headerlink" title="control + command + 上下键"></a>control + command + 上下键</h3><blockquote>
+<p>在.h和.m文件之间切换</p>
+</blockquote>
+<h3 id="command-return"><a href="#command-return" class="headerlink" title="command + return"></a>command + return</h3><blockquote>
+<p>切换成 standsrd editor</p>
+</blockquote>
+<h3 id="command-option-return"><a href="#command-option-return" class="headerlink" title="command + option + return"></a>command + option + return</h3><blockquote>
+<p>切换成 assistan editor</p>
+</blockquote>
+<h3 id="左侧、右侧、底部工具栏"><a href="#左侧、右侧、底部工具栏" class="headerlink" title="左侧、右侧、底部工具栏"></a>左侧、右侧、底部工具栏</h3><h4 id="command-shift-Y"><a href="#command-shift-Y" class="headerlink" title="command + shift + Y"></a>command + shift + Y</h4><blockquote>
+<p>切换底部 Console VIew 显示或者隐藏</p>
+</blockquote>
+<h4 id="command-0"><a href="#command-0" class="headerlink" title="command + 0"></a>command + 0</h4><blockquote>
+<p>切换左边导航区（Navigator）显示或者隐藏</p>
+</blockquote>
+<h4 id="command-option-0"><a href="#command-option-0" class="headerlink" title="command + option + 0"></a>command + option + 0</h4><blockquote>
+<p>切换右边工具区（Utility）显示或者隐藏</p>
+</blockquote>
+<h3 id="Tab栏"><a href="#Tab栏" class="headerlink" title="Tab栏"></a>Tab栏</h3><h4 id="command-T"><a href="#command-T" class="headerlink" title="command + T"></a>command + T</h4><blockquote>
+<p>新建一个Tab栏</p>
+</blockquote>
+<h4 id="command-shift-或者"><a href="#command-shift-或者" class="headerlink" title="command + shift + [ 或者 ]"></a>command + shift + [ 或者 ]</h4><blockquote>
+<p>Tab栏左右切换</p>
+</blockquote>
 <h2 id="开启无线调试"><a href="#开启无线调试" class="headerlink" title="开启无线调试"></a>开启无线调试</h2><p>前提： <code>iOS 11 + Xcode 9</code>  以上设备</p>
 <p>步骤： </p>
 <ul>
