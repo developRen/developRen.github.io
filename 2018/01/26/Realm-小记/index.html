@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Realm," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="记录 Realm 入门级操作。 创建 Realm 数据库文件Realm 默认会在 Documents 文件下创建一个default.realm文件。 但是考虑到，用户必须要登录到 Web 后端服务器中，并且需要支持账户快速切换功能的话。 那么可以为每个账户提供一个独立的 Realm 数据库，以此区分不同账户本地数据，并且当前账户所使用的数据库将作为默认 Realm 数据库来使用。（应用场景：1.Q">
+<meta name="keywords" content="Realm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Realm 小记">
+<meta property="og:url" content="https://developren.github.io/2018/01/26/Realm-小记/index.html">
+<meta property="og:site_name" content="一杰的博客">
+<meta property="og:description" content="记录 Realm 入门级操作。 创建 Realm 数据库文件Realm 默认会在 Documents 文件下创建一个default.realm文件。 但是考虑到，用户必须要登录到 Web 后端服务器中，并且需要支持账户快速切换功能的话。 那么可以为每个账户提供一个独立的 Realm 数据库，以此区分不同账户本地数据，并且当前账户所使用的数据库将作为默认 Realm 数据库来使用。（应用场景：1.Q">
+<meta property="og:updated_time" content="2018-01-26T03:41:54.412Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Realm 小记">
+<meta name="twitter:description" content="记录 Realm 入门级操作。 创建 Realm 数据库文件Realm 默认会在 Documents 文件下创建一个default.realm文件。 但是考虑到，用户必须要登录到 Web 后端服务器中，并且需要支持账户快速切换功能的话。 那么可以为每个账户提供一个独立的 Realm 数据库，以此区分不同账户本地数据，并且当前账户所使用的数据库将作为默认 Realm 数据库来使用。（应用场景：1.Q">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://developren.github.io/2018/01/26/Realm-小记/"/>
+
+
+
+
+
+  <title>Realm 小记 | 一杰的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一杰的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://developren.github.io/2018/01/26/Realm-小记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fuckinnng Dog">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一杰的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Realm 小记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-26T11:39:34+08:00">
+                2018-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具集/" itemprop="url" rel="index">
+                    <span itemprop="name">工具集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录 Realm 入门级操作。</p>
+<h2 id="创建-Realm-数据库文件"><a href="#创建-Realm-数据库文件" class="headerlink" title="创建 Realm 数据库文件"></a>创建 Realm 数据库文件</h2><p>Realm 默认会在 Documents 文件下创建一个default.realm文件。</p>
+<p>但是考虑到，用户必须要登录到 Web 后端服务器中，并且需要支持账户快速切换功能的话。 那么可以为每个账户提供一个独立的 Realm 数据库，以此区分不同账户本地数据，并且当前账户所使用的数据库将作为默认 Realm 数据库来使用。（应用场景：1.QQ iOS 客户端 本地文件；2.聊天记录）</p>
+<p>Realm 数据库文件创建是懒加载，所以只需要事先配置好目录和文件名即可。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</div><div class="line">    </div><div class="line"><span class="comment">// 使用默认的目录，但是请将文件名替换为用户名</span></div><div class="line">config.fileURL = [[[config.fileURL URLByDeletingLastPathComponent]</div><div class="line">                       URLByAppendingPathComponent:<span class="string">@"测试"</span>]</div><div class="line">                      URLByAppendingPathExtension:<span class="string">@"realm"</span>];</div><div class="line">    </div><div class="line"><span class="comment">// 将该配置设置为默认 Realm 配置</span></div><div class="line">[RLMRealmConfiguration setDefaultConfiguration:config];</div><div class="line">    </div><div class="line"><span class="comment">// Realm 懒加载，所以调用时才会创建</span></div><div class="line"><span class="comment">// ... ...</span></div></pre></td></tr></table></figure>
+<h2 id="删除-Realm-数据库文件"><a href="#删除-Realm-数据库文件" class="headerlink" title="删除 Realm 数据库文件"></a>删除 Realm 数据库文件</h2><p>在某些情况下，例如清除缓存、或者重置整个数据集之类的操作，那么就可能需要从磁盘中将 Realm 文件给完全删除掉。</p>
+<p>尽管不是必须的，不过您应当将 Realm 辅助文件连同 Realm 文件一起删除，以完全清除所有的相关文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">NSFileManager *manager = [NSFileManager defaultManager];</div><div class="line">// 获取当前默认的 Realm 数据库</div><div class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</div><div class="line">NSArray&lt;NSURL *&gt; *realmFileURLs = @[</div><div class="line">                                    config.fileURL,</div><div class="line">                                    [config.fileURL URLByAppendingPathExtension:@&quot;lock&quot;],</div><div class="line">                                    [config.fileURL URLByAppendingPathExtension:@&quot;note&quot;],</div><div class="line">                                    [config.fileURL URLByAppendingPathExtension:@&quot;management&quot;]</div><div class="line">                                    ];</div><div class="line">for (NSURL *URL in realmFileURLs) &#123;</div><div class="line">    NSError *error = nil;</div><div class="line">    [manager removeItemAtURL:URL error:&amp;error];</div><div class="line">    if (error) &#123;</div><div class="line">        // 错误处理</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>Realm 支持下述属性类型：<code>BOOL</code>、<code>bool</code>、<code>int</code>、<code>NSInteger</code>、<code>long</code>、<code>long long</code>、<code>float</code>、<code>double</code>、<code>NSString</code>、<code>NSDate</code>、<code>NSData</code> 以及 <a href="https://realm.io/cn/docs/objc/latest/#required-properties" target="_blank" rel="external">被特殊类型标记的</a> <code>NSNumber</code> 。</p>
+<p><code>CGFloat</code> 属性被取消了，因为它不具备平台独立性。</p>
+<h3 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h3><p>重写 <a href="https://realm.io/cn/docs/objc/latest/api/Classes/RLMObject.html#//api/name/primaryKey" target="_blank" rel="external"><code>+primaryKey</code></a> 可以设置模型的主键。声明主键允许对象的查询和更新更加高效，并且会强制要求每个值保持唯一性。一旦将带有主键的对象添加到 Realm 数据库，那么该对象的主键将无法更改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@interface Person : RLMObject</div><div class="line">@property NSInteger id;</div><div class="line">@property NSString *name;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation Person</div><div class="line">+ (NSString *)primaryKey &#123;</div><div class="line">    return @&quot;id&quot;;</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<h3 id="属性特性"><a href="#属性特性" class="headerlink" title="属性特性"></a>属性特性</h3><p>Realm 将会忽略诸如 <code>nonatomic</code>、<code>atomic</code>、<code>strong</code>、<code>copy</code>、<code>weak</code> 之类的 Objective-C 属性特性。这些特性对于 Realm 存储机制而言并没有意义。Realm 有自己优化过的存储语义。所以为了避免有人对代码产生误解，我们建议您在编写模型时不要附加任何属性特性。</p>
+<h3 id="属性备忘单"><a href="#属性备忘单" class="headerlink" title="属性备忘单"></a>属性备忘单</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>非可空值形式</th>
+<th>可空值形式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bool</td>
+<td><code>@property BOOL value;</code></td>
+<td><code>@property NSNumber&lt;RLMBool&gt; *value;</code></td>
+</tr>
+<tr>
+<td>Int</td>
+<td><code>@property int value;</code></td>
+<td><code>@property NSNumber&lt;RLMInt&gt; *value;</code></td>
+</tr>
+<tr>
+<td>Float</td>
+<td><code>@property float value;</code></td>
+<td><code>@property NSNumber&lt;RLMFloat&gt; *value;</code></td>
+</tr>
+<tr>
+<td>Double</td>
+<td><code>@property double value;</code></td>
+<td><code>@property NSNumber&lt;RLMDouble&gt; *value;</code></td>
+</tr>
+<tr>
+<td>String</td>
+<td><code>@property NSString *value;</code></td>
+<td><code>@property NSString *value;</code></td>
+</tr>
+<tr>
+<td>Data</td>
+<td><code>@property NSData *value;</code></td>
+<td><code>@property NSData *value;</code></td>
+</tr>
+<tr>
+<td>Date</td>
+<td><code>@property NSDate *value;</code></td>
+<td><code>@property NSDate *value;</code></td>
+</tr>
+<tr>
+<td>Object</td>
+<td>不存在：必须是可空值</td>
+<td><code>@property Object *value;</code></td>
+</tr>
+<tr>
+<td>List</td>
+<td><code>@property RLMArray&lt;Class *&gt;&lt;Class&gt; *value;</code></td>
+<td>不存在：必须是非可空值</td>
+</tr>
+<tr>
+<td>LinkingObjects</td>
+<td><code>@property (readonly) RLMLinkingObjects&lt;Object *&gt; *value;</code></td>
+<td>不存在：必须是非可空值</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Realm-关系构建"><a href="#Realm-关系构建" class="headerlink" title="Realm 关系构建"></a>Realm 关系构建</h2><p>可以通过 <code>RLMObject</code> 和 <code>RLMArray</code> 属性来关联 <code>RLMObject</code>。<code>RLMArray</code> 的接口与 <code>NSArray</code> 非常类似，并且 <code>RLMArray</code> 当中的对象可以通过索引下标来进行访问。与 <code>NSArray</code> 所不同的是，<code>RLMArray</code> 的类型是固定的，并且 只能存放一种 <code>RLMObject</code> 类型。</p>
+<h3 id="多对一关系（包括一对一）"><a href="#多对一关系（包括一对一）" class="headerlink" title="多对一关系（包括一对一）"></a>多对一关系（包括一对一）</h3><p>要配置多对一或者一对一关系，在数据模型当中声明一个 <code>RLMObject</code> 子类类型的属性即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// Dog.h</div><div class="line">@interface Dog : RLMObject</div><div class="line">// ... 其余属性声明</div><div class="line">@property Person *owner;</div><div class="line">@property Father *father;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>操作关系属性的方法与其他属性类似：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Person *jim = [[Person alloc] init];</div><div class="line">Dog    *rex = [[Dog alloc] init];</div><div class="line">Father *frank  = [[Father alloc] init];</div><div class="line">rex.owner = jim;</div><div class="line">rex.father = frank;</div></pre></td></tr></table></figure>
+<p>由此将 Person、Father 与 Dog 建立了对应关系。</p>
+<p>在使用 <code>RLMObject</code> 属性时，可以使用正常的属性访问语法来访问嵌套属性。例如，<code>rex.owner.address.country</code> 将会遍历对象图，然后自动从 Realm 中检索出每个所需的对象。</p>
+<h3 id="多对多关系（包括一对多）"><a href="#多对多关系（包括一对多）" class="headerlink" title="多对多关系（包括一对多）"></a>多对多关系（包括一对多）</h3><p>让我们给 <code>Person</code> 模型添加一个 <code>dogs</code> 属性，从而让其能够与多个 <code>Dog</code> 对象建立关系。首先，我们需要定义 <code>RLMArray&lt;Dog&gt;</code> 类型，也就是在 <code>Dog</code> 模型接口定义的底部使用这条宏：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// Dog.h</div><div class="line">@interface Dog : RLMObject</div><div class="line">// ... property declarations</div><div class="line">@end</div><div class="line"></div><div class="line">RLM_ARRAY_TYPE(Dog) // 定义 RLMArray&lt;Dog&gt; 类型</div></pre></td></tr></table></figure>
+<p><code>RLM_ARRAY_TYPE</code> 宏创建了一个协议，从而允许您使用 <code>RLMArray&lt;Dog&gt;</code> 这种语法。如果这条宏没有放置在模型接口定义的底部，那么这个模型类就必须前置声明。</p>
+<p>接下来，您就可以声明 <code>RLMArray&lt;Dog&gt;</code> 类型的属性了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// Person.h</div><div class="line">@interface Person : RLMObject</div><div class="line">// ...其他属性声明</div><div class="line">@property RLMArray&lt;Dog *&gt;&lt;Dog&gt; *dogs;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>您可以照常对 <code>RLMArray</code> 属性进行访问和赋值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// Jim 是 Rex 和所有名为 &quot;Fido&quot; 狗狗的主人</div><div class="line">RLMResults&lt;Dog *&gt; *someDogs = [Dog objectsWhere:@&quot;name contains &apos;Fido&apos;&quot;];</div><div class="line">[jim.dogs addObjects:someDogs];</div><div class="line">[jim.dogs addObject:rex];</div></pre></td></tr></table></figure>
+<h3 id="双向关系"><a href="#双向关系" class="headerlink" title="双向关系"></a>双向关系</h3><p>关系是单向的。以 <code>Person</code> 和 <code>Dog</code> 这两个类为例。如果 <code>Person.dogs</code> 连接了一个 <code>Dog</code> 实例，那么您可以随着该连接从 <code>Person</code> 访问到对应的 <code>Dog</code>，但是是没有办法从 <code>Dog</code> 访问到对应的 <code>Person</code> 对象的。您可以设置一个一对一属性 <code>Dog.owner</code> 从而连接到 <code>Person</code>，但是这些连接实际上仍然是互相独立的。给 <code>Person.dogs</code> 添加一个 <code>Dog</code> 对象并不会将该对象的 <code>Dog.owner</code> 属性设置为对应的 <code>Person</code>。为了解决这个问题，Realm 提供了<em>连接对象</em>属性，从而表示这种双向关系。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@interface Dog : RLMObject</div><div class="line">@property NSString *name;</div><div class="line">@property NSInteger age;</div><div class="line">@property (readonly) RLMLinkingObjects *owners;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation Dog</div><div class="line">+ (NSDictionary *)linkingObjectsProperties &#123;</div><div class="line">    return @&#123;</div><div class="line">        @&quot;owners&quot;: [RLMPropertyDescriptor descriptorWithClass:Person.class propertyName:@&quot;dogs&quot;],</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>借助连接对象属性，可以从特定属性获取连接到指定对象的所有对象。<code>Dog</code> 对象可以拥有一个名为 <code>owners</code> 属性，它包含所有 <code>dogs</code> 属性有该 <code>Dog</code> 对象的 <code>Person</code> 对象。将这个 <code>owners</code> 属性设置为 <code>RLMLinkingObjects</code> 类型，然后重写 <code>+[RLMObject linkingObjectsProperties]</code> 来表示 <code>owners</code> 与 <code>Person</code> 模型对象之间的关系。</p>
+<h2 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h2><h3 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h3><p>当定义完数据模型之后，就可以实例化 <code>RLMObject</code> 子类了， 然后还可以向 Realm 数据库中添加新的实例。以这个简单的数据模型为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// Dog 数据模型</div><div class="line">@interface Dog : RLMObject</div><div class="line">@property NSString *name;</div><div class="line">@property NSInteger age;</div><div class="line">@end</div><div class="line"></div><div class="line">// Implementation</div><div class="line">@implementation Dog</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>创建新对象的方法有很多种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// (1) 创建 Dog 对象，然后设置其属性</div><div class="line">Dog *myDog = [[Dog alloc] init];</div><div class="line">myDog.name = @&quot;Rex&quot;;</div><div class="line">myDog.age = 10;</div><div class="line"></div><div class="line">// (2) 从字典中创建 Dog 对象</div><div class="line">Dog *myOtherDog = [[Dog alloc] initWithValue:@&#123;@&quot;name&quot; : @&quot;Pluto&quot;, @&quot;age&quot; : @3&#125;];</div><div class="line"></div><div class="line">// (3) 从数组中创建 Dog 对象</div><div class="line">Dog *myThirdDog = [[Dog alloc] initWithValue:@[@&quot;Pluto&quot;, @3]];</div></pre></td></tr></table></figure>
+<ol>
+<li>使用指定初始化函数来创建对象是最直观的方式。<strong>请注意，所有非可空属性必须在对象添加到 Realm 数据库之前完成赋值。</strong></li>
+<li>通过恰当的键值，还可以使用字典来创建对象。</li>
+<li>最后，<code>RLMObject</code> 的子类还可以使用数组来完成实例化。数组中的值必须与数据模型中对应的属性次序相同。</li>
+</ol>
+<h3 id="增"><a href="#增" class="headerlink" title="增"></a>增</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 获取默认的 Realm 数据库</div><div class="line">RLMRealm *realm = [RLMRealm defaultRealm];</div><div class="line">// （每个线程）只需执行一次</div><div class="line"></div><div class="line">// 在事务中向 Realm 数据库中添加数据</div><div class="line">[realm beginWriteTransaction];</div><div class="line">[realm addObject:myDog];</div><div class="line">[realm commitWriteTransaction];</div></pre></td></tr></table></figure>
+<h3 id="删"><a href="#删" class="headerlink" title="删"></a>删</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 在事务中删除对象</div><div class="line">[realm beginWriteTransaction];</div><div class="line">[realm deleteObject:myDog];</div><div class="line">[realm commitWriteTransaction];</div><div class="line"></div><div class="line">// 从 Realm 数据库中删除所有对象</div><div class="line">[realm beginWriteTransaction];</div><div class="line">[realm deleteAllObjects];</div><div class="line">[realm commitWriteTransaction];</div></pre></td></tr></table></figure>
+<h3 id="改"><a href="#改" class="headerlink" title="改"></a>改</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 在事务中更新对象</div><div class="line">[realm beginWriteTransaction];</div><div class="line">myDog.name = @&quot;Thomas Pynchon&quot;;</div><div class="line">[realm commitWriteTransaction];</div></pre></td></tr></table></figure>
+<h3 id="查"><a href="#查" class="headerlink" title="查"></a>查</h3><p>Realm 条件查询方式与 NSPredicate 类似。</p>
+<ul>
+<li><p>比较操作数可以是属性名，也可以是常量。但至少要有一个操作数是属性名；</p>
+</li>
+<li><p>比较操作符 <strong>==</strong>、<strong>&lt;=</strong>、<strong>&lt;</strong>、<strong>&gt;=</strong>、<strong>&gt;</strong>、<strong>!=</strong> 和 <strong>BETWEEN</strong> 支持 <code>int</code>、<code>long</code>、<code>long long</code>、<code>float</code>、<code>double</code>以及 <code>NSDate</code> 这几种属性类型，例如 <code>age == 45</code>；</p>
+</li>
+<li><p>比较是否相同：<strong>==</strong> 和 <strong>!=</strong>，例如，<code>[Employee objectsWhere:@&quot;company == %@&quot;, company]</code>；</p>
+</li>
+<li><p>比较操作符 <strong>==</strong> 和 <strong>!=</strong> 支持布尔属性；</p>
+</li>
+<li><p>对于 <code>NSString</code> 和 <code>NSData</code> 属性而言，支持使用 <strong>==</strong>、<strong>!=</strong>、<strong>BEGINSWITH</strong>、<strong>CONTAINS</strong> 和 <strong>ENDSWITH</strong>操作符，例如 <code>name CONTAINS &#39;Ja&#39;</code>；</p>
+</li>
+<li><p>对于 <code>NSString</code> 属性而言，<strong>LIKE</strong> 操作符可以用来比较左端属性和右端表达式：<code>?</code> 和 <code>*</code> 可用作通配符，其中 <code>?</code> 可以匹配任意一个字符，<code>*</code> 匹配 0 个及其以上的字符。例如：<code>value LIKE &#39;?bc*&#39;</code> 可以匹配到诸如 “abcde” 和 “cbc” 之类的字符串；</p>
+</li>
+<li><p>字符串的比较忽略大小写，例如 <code>name CONTAINS[c] &#39;Ja&#39;</code>。请注意，只有 “A-Z” 和 “a-z” 之间的字符大小写会被忽略。<code>[c]</code> 修饰符可以与 <code>[d]</code> 修饰符结合使用；</p>
+</li>
+<li><p>字符串的比较忽略变音符号，例如 <code>name BEGINSWITH[d] &#39;e&#39;</code> 能够匹配到 <strong>étoile</strong>。这个修饰符可以与 <code>[c]</code> 修饰符结合使用。（这个修饰符只能够用于 Realm 所支持的字符串子集：参见<a href="https://realm.io/cn/docs/objc/latest/#limitations-general" target="_blank" rel="external">当前的限制</a>一节来了解详细信息。）</p>
+</li>
+<li><p>Realm 支持以下组合操作符：<strong>“AND”</strong>、<strong>“OR”</strong> 和 <strong>“NOT”</strong>，例如 <code>name BEGINSWITH &#39;J&#39; AND age &gt;= 32</code>；</p>
+</li>
+<li><p>包含操作符：<strong>IN</strong>，例如 <code>name IN {&#39;Lisa&#39;, &#39;Spike&#39;, &#39;Hachi&#39;}</code>；</p>
+</li>
+<li><p>空值比较：<strong>==</strong>、<strong>!=</strong>，例如 <code>[Company objectsWhere:@&quot;ceo == nil&quot;]</code>。请注意，Realm 将 <code>nil</code> 视为一种特殊值，而不是某种缺失值；这与 SQL 不同，<code>nil</code> 等同于自身；</p>
+</li>
+<li><p><strong>ANY 比较</strong>，例如 <code>ANY student.age &lt; 21</code>；</p>
+</li>
+<li><p><code>RLMArray</code> 和 <code>RLMResults</code> 属性支持聚集表达式：<strong>@count</strong>、<strong>@min</strong>、<strong>@max</strong>、<strong>@sum</strong> 和 <strong>@avg</strong>，例如 <code>[Company objectsWhere:@&quot;employees.@count &gt; 5&quot;]</code> 可用以检索所有拥有 5 名以上雇员的公司。</p>
+</li>
+<li><p>支持子查询，不过存在以下限制：</p>
+</li>
+</ul>
+<ul>
+<li><strong>@count</strong> 是唯一一个能在 <strong>SUBQUERY</strong> 表达式当中使用的操作符；</li>
+<li><code>SUBQUERY(…).@count</code> 表达式只能与常量相比较；</li>
+<li>目前仍不支持关联子查询。</li>
+</ul>
+<p>关于谓词请阅读👉<a href="http://www.cocoachina.com/ios/20160111/14926.html" target="_blank" rel="external">iOS中的谓词（NSPredicate）使用</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Realm/" rel="tag"># Realm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/22/Xcode-Tips/" rel="next" title="Xcode Tips">
+                <i class="fa fa-chevron-left"></i> Xcode Tips
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/me.png"
+                alt="Fuckinnng Dog" />
+            
+              <p class="site-author-name" itemprop="name">Fuckinnng Dog</p>
+              <p class="site-description motion-element" itemprop="description">Having you code clearly organized in a clean and defined manner is a way to show respect for yourself and other people that will read and change you code.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/developRen" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:jie_ios@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-Realm-数据库文件"><span class="nav-number">1.</span> <span class="nav-text">创建 Realm 数据库文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除-Realm-数据库文件"><span class="nav-number">2.</span> <span class="nav-text">删除 Realm 数据库文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据模型"><span class="nav-number">3.</span> <span class="nav-text">数据模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主键"><span class="nav-number">3.1.</span> <span class="nav-text">主键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性特性"><span class="nav-number">3.2.</span> <span class="nav-text">属性特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性备忘单"><span class="nav-number">3.3.</span> <span class="nav-text">属性备忘单</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Realm-关系构建"><span class="nav-number">4.</span> <span class="nav-text">Realm 关系构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多对一关系（包括一对一）"><span class="nav-number">4.1.</span> <span class="nav-text">多对一关系（包括一对一）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多对多关系（包括一对多）"><span class="nav-number">4.2.</span> <span class="nav-text">多对多关系（包括一对多）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双向关系"><span class="nav-number">4.3.</span> <span class="nav-text">双向关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增删改查"><span class="nav-number">5.</span> <span class="nav-text">增删改查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建对象"><span class="nav-number">5.1.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增"><span class="nav-number">5.2.</span> <span class="nav-text">增</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删"><span class="nav-number">5.3.</span> <span class="nav-text">删</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改"><span class="nav-number">5.4.</span> <span class="nav-text">改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查"><span class="nav-number">5.5.</span> <span class="nav-text">查</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fuckinnng Dog</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
