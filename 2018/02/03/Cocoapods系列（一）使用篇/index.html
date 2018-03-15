@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="对于做iOS开发的绝大多数开发者而言，Cocoapods 并不陌生。无论是日常开发，还是编写 Dome，时常用到 Cocoapods 来管理库文件的依赖，网络上也有大量关于 Cocoapods 安装、替换镜像的文章，在此也不再累赘描述。 本文将会着重讲解Podfile文件以及pod命令行。  关于Cocoapods的工作原理可见笔者另一篇博文。">
+<meta name="description" content="对于做iOS开发的绝大多数开发者而言，Cocoapods 并不陌生。无论是日常开发，还是编写 Dome，时常用到 Cocoapods 来管理库文件的依赖。 笔者之前也只是停留在用 Cocoapods 导入第三方库而已，由于对于组件化学习的深入和发布自己的代码库的需求，于是有了该系列的文章，来梳理 Cocoapods 使用过程中的一些细节。 网络上也有大量关于 Cocoapods 安装、替换镜像的文">
 <meta name="keywords" content="Cocoapods">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cocoapods系列（一）使用篇">
 <meta property="og:url" content="https://developren.github.io/2018/02/03/Cocoapods系列（一）使用篇/index.html">
 <meta property="og:site_name" content="一杰的博客">
-<meta property="og:description" content="对于做iOS开发的绝大多数开发者而言，Cocoapods 并不陌生。无论是日常开发，还是编写 Dome，时常用到 Cocoapods 来管理库文件的依赖，网络上也有大量关于 Cocoapods 安装、替换镜像的文章，在此也不再累赘描述。 本文将会着重讲解Podfile文件以及pod命令行。  关于Cocoapods的工作原理可见笔者另一篇博文。">
-<meta property="og:updated_time" content="2018-02-03T06:44:20.594Z">
+<meta property="og:description" content="对于做iOS开发的绝大多数开发者而言，Cocoapods 并不陌生。无论是日常开发，还是编写 Dome，时常用到 Cocoapods 来管理库文件的依赖。 笔者之前也只是停留在用 Cocoapods 导入第三方库而已，由于对于组件化学习的深入和发布自己的代码库的需求，于是有了该系列的文章，来梳理 Cocoapods 使用过程中的一些细节。 网络上也有大量关于 Cocoapods 安装、替换镜像的文">
+<meta property="og:updated_time" content="2018-03-15T09:08:26.348Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cocoapods系列（一）使用篇">
-<meta name="twitter:description" content="对于做iOS开发的绝大多数开发者而言，Cocoapods 并不陌生。无论是日常开发，还是编写 Dome，时常用到 Cocoapods 来管理库文件的依赖，网络上也有大量关于 Cocoapods 安装、替换镜像的文章，在此也不再累赘描述。 本文将会着重讲解Podfile文件以及pod命令行。  关于Cocoapods的工作原理可见笔者另一篇博文。">
+<meta name="twitter:description" content="对于做iOS开发的绝大多数开发者而言，Cocoapods 并不陌生。无论是日常开发，还是编写 Dome，时常用到 Cocoapods 来管理库文件的依赖。 笔者之前也只是停留在用 Cocoapods 导入第三方库而已，由于对于组件化学习的深入和发布自己的代码库的需求，于是有了该系列的文章，来梳理 Cocoapods 使用过程中的一些细节。 网络上也有大量关于 Cocoapods 安装、替换镜像的文">
 
 
 
@@ -351,7 +351,9 @@
       
 
       
-        <p>对于做iOS开发的绝大多数开发者而言，<code>Cocoapods</code> 并不陌生。无论是日常开发，还是编写 <code>Dome</code>，时常用到 <code>Cocoapods</code> 来管理库文件的依赖，网络上也有大量关于 <code>Cocoapods</code> 安装、替换镜像的文章，在此也不再累赘描述。</p>
+        <p>对于做iOS开发的绝大多数开发者而言，<code>Cocoapods</code> 并不陌生。无论是日常开发，还是编写 <code>Dome</code>，时常用到 <code>Cocoapods</code> 来管理库文件的依赖。</p>
+<p>笔者之前也只是停留在用 Cocoapods 导入第三方库而已，由于对于组件化学习的深入和发布自己的代码库的需求，于是有了该系列的文章，来梳理 Cocoapods 使用过程中的一些细节。</p>
+<p>网络上也有大量关于 <code>Cocoapods</code> 安装、替换镜像的文章，在此也不再累赘描述。</p>
 <p>本文将会着重讲解<code>Podfile文件</code>以及<code>pod命令行</code>。</p>
 <blockquote>
 <p>关于<a href="http://renyijie.top/2017/07/09/CocoaPod工作原理/" target="_blank" rel="external">Cocoapods的工作原理</a>可见笔者另一篇博文。</p>
