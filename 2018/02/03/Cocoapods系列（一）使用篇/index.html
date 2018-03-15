@@ -86,7 +86,7 @@
 <meta property="og:url" content="https://developren.github.io/2018/02/03/Cocoapods系列（一）使用篇/index.html">
 <meta property="og:site_name" content="一杰的博客">
 <meta property="og:description" content="对于做iOS开发的绝大多数开发者而言，Cocoapods 并不陌生。无论是日常开发，还是编写 Dome，时常用到 Cocoapods 来管理库文件的依赖。 笔者之前也只是停留在用 Cocoapods 导入第三方库而已，由于对于组件化学习的深入和发布自己的代码库的需求，于是有了该系列的文章，来梳理 Cocoapods 使用过程中的一些细节。 网络上也有大量关于 Cocoapods 安装、替换镜像的文">
-<meta property="og:updated_time" content="2018-03-15T09:08:26.348Z">
+<meta property="og:updated_time" content="2018-03-15T09:12:32.717Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cocoapods系列（一）使用篇">
 <meta name="twitter:description" content="对于做iOS开发的绝大多数开发者而言，Cocoapods 并不陌生。无论是日常开发，还是编写 Dome，时常用到 Cocoapods 来管理库文件的依赖。 笔者之前也只是停留在用 Cocoapods 导入第三方库而已，由于对于组件化学习的深入和发布自己的代码库的需求，于是有了该系列的文章，来梳理 Cocoapods 使用过程中的一些细节。 网络上也有大量关于 Cocoapods 安装、替换镜像的文">
@@ -352,7 +352,7 @@
 
       
         <p>对于做iOS开发的绝大多数开发者而言，<code>Cocoapods</code> 并不陌生。无论是日常开发，还是编写 <code>Dome</code>，时常用到 <code>Cocoapods</code> 来管理库文件的依赖。</p>
-<p>笔者之前也只是停留在用 Cocoapods 导入第三方库而已，由于对于组件化学习的深入和发布自己的代码库的需求，于是有了该系列的文章，来梳理 Cocoapods 使用过程中的一些细节。</p>
+<p>笔者之前也只是停留在用 <code>Cocoapods</code> 导入第三方库而已，由于对于组件化学习的深入和发布自己的代码库的需求，于是有了该系列的文章，来梳理 <code>Cocoapods</code> 使用过程中的一些细节。</p>
 <p>网络上也有大量关于 <code>Cocoapods</code> 安装、替换镜像的文章，在此也不再累赘描述。</p>
 <p>本文将会着重讲解<code>Podfile文件</code>以及<code>pod命令行</code>。</p>
 <blockquote>
@@ -406,7 +406,7 @@
 <h3 id="参数–verbose-和-–silent"><a href="#参数–verbose-和-–silent" class="headerlink" title="参数–verbose 和 –silent"></a>参数–verbose 和 –silent</h3><p>这两个参数是用来控制<code>pod</code>命令的,而有些人不希望看到输出的情况下可以选择<code>--silent</code>。而对于在执行这两条命令的情况下如果出错了，则可能添加<code>--verbose</code>的参数能看到具体的出错信息。<code>--verbose</code>则是用来输出这两条命令执行过程中所包含的所有信息。对于大多数的<code>Cocoapods</code>的命令行来说都带有着两个参数。</p>
 <p>其他的细节就不具体说了，大家可以通过<code>help</code>命令来进行查看详情。</p>
 <h3 id="常用命令行集合"><a href="#常用命令行集合" class="headerlink" title="常用命令行集合"></a>常用命令行集合</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//  创建默认的 Podfile  </span></div><div class="line">$ pod init  </div><div class="line">      </div><div class="line"><span class="comment">//  第一次使用安装框架  </span></div><div class="line">$ pod install  </div><div class="line">      </div><div class="line"><span class="comment">//  安装框架，不更新本地索引，速度快  </span></div><div class="line">$ pod install --no-repo-update  </div><div class="line">         </div><div class="line"><span class="comment">//  今后升级、添加、删除框架，或者框架不好用都使用这个命令  </span></div><div class="line">$ pod update  </div><div class="line">      </div><div class="line"><span class="comment">//  更新框架，不更新本地索引，速度快  </span></div><div class="line">$ pod update --no-repo-update  </div><div class="line">      </div><div class="line"><span class="comment">//  搜索框架  </span></div><div class="line">$ pod search XXX  </div><div class="line">      </div><div class="line"><span class="comment">//  帮助  </span></div><div class="line">$ pod --help </div><div class="line">    </div><div class="line">终端命令: control + C 取消上一次操作;</div></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简单来说要使用<code>Cocoapods</code>只需通过三个步骤：安装、写Podfile和<code>pod install</code>命令即可。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简单来说要使用<code>Cocoapods</code>只需通过三个步骤：安装、写<code>Podfile</code>和<code>pod install</code>命令即可。</p>
 <p>但是对于一个有理想的大好青年来说，绝不会止步于此。</p>
 <p>本着为人类伟大的开源主义事业奋斗终身的目标，以及加入热火朝天的组件化开发浪潮的目的。</p>
 <p><code>Cocoapods系列</code>后续文章将以这两个目标和目的展开，分享如何在一个项目同时使用私有库和开源库，以及如何进行组件化管理。</p>
@@ -449,6 +449,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/15/Cocoapods系列（二）公有篇/" rel="prev" title="Cocoapods系列（二）公有篇">
+                Cocoapods系列（二）公有篇 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -529,7 +533,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
