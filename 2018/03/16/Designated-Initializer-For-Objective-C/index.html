@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Objective-C," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在阅读 AFNetworking 源码时，发现每个类都有一个初始化方法，都有跟着一个 NS_DESIGNATED_INITIALIZER 宏。 12345678/** Initializes an instance of a network reachability manager from the specified reachability object. @param reachabilit">
+<meta name="keywords" content="Objective-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Designated Initializer For Objective-C">
+<meta property="og:url" content="https://developren.github.io/2018/03/16/Designated-Initializer-For-Objective-C/index.html">
+<meta property="og:site_name" content="一杰的博客">
+<meta property="og:description" content="在阅读 AFNetworking 源码时，发现每个类都有一个初始化方法，都有跟着一个 NS_DESIGNATED_INITIALIZER 宏。 12345678/** Initializes an instance of a network reachability manager from the specified reachability object. @param reachabilit">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8258d55bgy1fpenxodkptj211v0i0tau.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8258d55bgy1fpepjroqa1j20cc0bd74t.jpg">
+<meta property="og:updated_time" content="2018-03-16T08:09:43.190Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Designated Initializer For Objective-C">
+<meta name="twitter:description" content="在阅读 AFNetworking 源码时，发现每个类都有一个初始化方法，都有跟着一个 NS_DESIGNATED_INITIALIZER 宏。 12345678/** Initializes an instance of a network reachability manager from the specified reachability object. @param reachabilit">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/8258d55bgy1fpenxodkptj211v0i0tau.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://developren.github.io/2018/03/16/Designated-Initializer-For-Objective-C/"/>
+
+
+
+
+
+  <title>Designated Initializer For Objective-C | 一杰的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一杰的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://developren.github.io/2018/03/16/Designated-Initializer-For-Objective-C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fuckinnng Dog">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一杰的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Designated Initializer For Objective-C</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-16T16:08:39+08:00">
+                2018-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Initializer/" itemprop="url" rel="index">
+                    <span itemprop="name">Initializer</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在阅读 <code>AFNetworking</code> 源码时，发现每个类都有一个初始化方法，都有跟着一个 <code>NS_DESIGNATED_INITIALIZER</code> 宏。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> Initializes an instance of a network reachability manager from the specified reachability object.</div><div class="line"></div><div class="line"> @param reachability The reachability object to monitor.</div><div class="line"></div><div class="line"> @return An initialized network reachability manager, actively monitoring the specified reachability.</div><div class="line"> */</div><div class="line">- (<span class="keyword">instancetype</span>)initWithReachability:(<span class="built_in">SCNetworkReachabilityRef</span>)reachability <span class="built_in">NS_DESIGNATED_INITIALIZER</span>;</div></pre></td></tr></table></figure>
+<p>接着发现 <code>NSObject</code>、<code>UIView</code>、<code>UIViewController</code> 也都有，才发现自己之前缺少对源码的留意，格物致知，于是决定一探究竟。</p>
+<h2 id="NS-DESIGNATED-INITIALIZER"><a href="#NS-DESIGNATED-INITIALIZER" class="headerlink" title="NS_DESIGNATED_INITIALIZER"></a>NS_DESIGNATED_INITIALIZER</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#ifndef NS_DESIGNATED_INITIALIZER</span></div><div class="line"><span class="meta">#if __has_attribute(objc_designated_initializer)</span></div><div class="line"><span class="meta">#define NS_DESIGNATED_INITIALIZER __attribute__((objc_designated_initializer))</span></div><div class="line"><span class="meta">#else</span></div><div class="line"><span class="meta">#define NS_DESIGNATED_INITIALIZER</span></div><div class="line"><span class="meta">#endif</span></div><div class="line"><span class="meta">#endif</span></div></pre></td></tr></table></figure>
+<p><code>NS_DESIGNATED_INITIALIZER</code> 的宏定义中<code>__has_attribute是Clang</code> 的一个用于检测当前编译器是否支持某一特性的一个宏，对你没有听错，<code>__has_attribute</code> 也是一个宏。详细信息见: <a href="http://clang.llvm.org/docs/AttributeReference.html#type-safety-checking" target="_blank" rel="external">Type Safety Checking</a></p>
+<p>通过上面的定义，我们可以看到<code>NS_DESIGNATED_INITIALIZER</code>其实是给初始化方法声明的后面加上了一个编译器可见的标记，不要小看这个标记，他可以在编译时就帮我们找出一些潜在的问题。</p>
+<p>通过它可以让我们充分发挥编译器的特性（编译时检查，语法错误后并给出<code>warning</code>），进而帮我们找出初始化过程中可能存在的漏洞，增加代码的健壮性，写出更规范的代码。</p>
+<h3 id="NSObject-中的-NS-DESIGNATED-INITIALIZER"><a href="#NSObject-中的-NS-DESIGNATED-INITIALIZER" class="headerlink" title="NSObject 中的 NS_DESIGNATED_INITIALIZER"></a>NSObject 中的 NS_DESIGNATED_INITIALIZER</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">instancetype</span>)init</div><div class="line"><span class="meta">#if NS_ENFORCE_NSOBJECT_DESIGNATED_INITIALIZER</span></div><div class="line">    <span class="built_in">NS_DESIGNATED_INITIALIZER</span></div><div class="line"><span class="meta">#endif</span></div><div class="line">    ;</div></pre></td></tr></table></figure>
+<p>可以看出，如果子类没有指定 <code>NS_DESIGNATED_INITIALIZER</code>，则默认把<code>init</code>方法作为<code>NS_DESIGNATED_INITIALIZER</code>，如果子类有<code>NS_DESIGNATED_INITIALIZER</code>，那么<code>init</code>将只是一个普通的初始化方法。从<code>Objective-C</code>的继承链我们可以看出，除了如<code>NSProxy</code>之外的类，几乎都是派生自<code>NSObject</code>，所有<code>init</code>才成为了所有类的标配初始化方法。</p>
+<h3 id="AFNetworkReachabilityManager-中的-NS-DESIGNATED-INITIALIZER"><a href="#AFNetworkReachabilityManager-中的-NS-DESIGNATED-INITIALIZER" class="headerlink" title="AFNetworkReachabilityManager 中的 NS_DESIGNATED_INITIALIZER"></a>AFNetworkReachabilityManager 中的 NS_DESIGNATED_INITIALIZER</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// AFNetworkReachabilityManager.h</div><div class="line">// 提供了三个构造方法</div><div class="line"></div><div class="line">+ (instancetype)managerForDomain:(NSString *)domain;</div><div class="line">+ (instancetype)managerForAddress:(const void *)address;</div><div class="line">- (instancetype)initWithReachability:(SCNetworkReachabilityRef)reachability NS_DESIGNATED_INITIALIZER;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// AFNetworkReachabilityManager.m</span></div><div class="line"><span class="comment">// 构造方法的具体实现</span></div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithReachability:(<span class="built_in">SCNetworkReachabilityRef</span>)reachability &#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">self</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.networkReachability = <span class="built_in">CFBridgingRelease</span>(reachability);</div><div class="line">    <span class="keyword">self</span>.networkReachabilityStatus = AFNetworkReachabilityStatusUnknown;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)init <span class="built_in">NS_UNAVAILABLE</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#ifndef __clang_analyzer__</span></div><div class="line">+ (<span class="keyword">instancetype</span>)managerForDomain:(<span class="built_in">NSString</span> *)domain &#123;</div><div class="line">    <span class="built_in">SCNetworkReachabilityRef</span> reachability = <span class="built_in">SCNetworkReachabilityCreateWithName</span>(kCFAllocatorDefault, [domain UTF8String]);</div><div class="line"></div><div class="line">    AFNetworkReachabilityManager *manager = [[<span class="keyword">self</span> alloc] initWithReachability:reachability];</div><div class="line"></div><div class="line">    <span class="keyword">return</span> manager;</div><div class="line">&#125;</div><div class="line"><span class="meta">#endif</span></div><div class="line"></div><div class="line"><span class="meta">#ifndef __clang_analyzer__</span></div><div class="line">+ (<span class="keyword">instancetype</span>)managerForAddress:(<span class="keyword">const</span> <span class="keyword">void</span> *)address &#123;</div><div class="line">    <span class="built_in">SCNetworkReachabilityRef</span> reachability = <span class="built_in">SCNetworkReachabilityCreateWithAddress</span>(kCFAllocatorDefault, (<span class="keyword">const</span> <span class="keyword">struct</span> sockaddr *)address);</div><div class="line">    AFNetworkReachabilityManager *manager = [[<span class="keyword">self</span> alloc] initWithReachability:reachability];</div><div class="line"></div><div class="line">    <span class="keyword">return</span> manager;</div><div class="line">&#125;</div><div class="line"><span class="meta">#endif</span></div></pre></td></tr></table></figure>
+<p>可以看出<code>-(instancetype)managerForDomain:</code> 和 <code>-(instancetype)managerForAddress:</code> 中都调用了 <code>-(instancetype)initWithReachability:</code> 来做初始化。</p>
+<p>而 <code>AFNetworkReachabilityManager</code> 是继承与 <code>NSObject</code> 的，那么父类的 <code>-init</code> 将不会成为指定初始化方法。这里还把 <code>-init</code> 方法设置成 <code>NS_UNAVAILABLE</code> ，调用者在 <code>-init</code> 方法时编译器会直接抛出 <code>waring</code> ，从而起到限制的的作用。</p>
+<h2 id="开发者文档中的描述"><a href="#开发者文档中的描述" class="headerlink" title="开发者文档中的描述"></a>开发者文档中的描述</h2><blockquote>
+<p>In Objective-C, object initialization is based on the notion of a <em>designated initializer</em>, an initializer method that is responsible for calling one of its superclass’s initializers and then initializing its own instance variables. Initializers that are not designated initializers are known as <em>convenience initializers</em>. Convenience initializers typically delegate to another initializer—eventually terminating the chain at a designated initializer—rather than performing initialization themselves.</p>
+<p>The designated initializer pattern helps ensure that inherited initializers properly initialize all instance variables. A subclass that needs to perform nontrivial initialization should override all of its superclass’s designated initializers, but it does not need to override the convenience initializers. For more information about initializers, see <a href="https://developer.apple.com/library/content/documentation/General/Conceptual/CocoaEncyclopedia/Initialization/Initialization.html#//apple_ref/doc/uid/TP40010810-CH6" target="_blank" rel="external">Object Initialization</a>.</p>
+<p>To clarify the distinction between designated and designated initializers clear, you can add the <code>NS_DESIGNATED_INITIALIZER</code> macro to any method in the <code>init</code> family, denoting it a designated initializer. Using this macro introduces a few restrictions:</p>
+<ul>
+<li>The implementation of a designated initializer must chain to a superclass <code>init</code> method (with <code>[super init...]</code>) that is a designated initializer for the superclass.</li>
+<li>The implementation of a convenience initializer (an initializer not marked as a designated initializer within a class that has at least one initializer marked as a designated initializer) must delegate to another initializer (with <code>[self init...]</code>).</li>
+<li>If a class provides one or more designated initializers, it must implement all of the designated initializers of its superclass.</li>
+</ul>
+<p>If any of these restrictions are violated, you receive warnings from the compiler.</p>
+<p>If you use the <code>NS_DESIGNATED_INITIALIZER</code> macro in your class, you need to mark all of your designated initializers with this macro. All other initializers will be considered to be convenience initializers.</p>
+</blockquote>
+<p><img src="https://ws1.sinaimg.cn/large/8258d55bgy1fpenxodkptj211v0i0tau.jpg" alt="Multiple initializers"></p>
+<h2 id="NS-DESIGNATED-INITIALIZER-使用方法"><a href="#NS-DESIGNATED-INITIALIZER-使用方法" class="headerlink" title="NS_DESIGNATED_INITIALIZER 使用方法"></a>NS_DESIGNATED_INITIALIZER 使用方法</h2><p>关于指定构造器和便利构造器可以看<a href="https://www.2cto.com/kf/201603/491713.html" target="_blank" rel="external">这篇文章</a>,构造器也就是文中的方法。</p>
+<p>NS_DESIGNATED_INITIALIZER 使用方法：</p>
+<ul>
+<li>子类如果有指定初始化方法，那么指定初始化方法实现时必须调用它的直接父类的指定初始化方法。</li>
+<li>如果子类有指定初始化方法，那么便利初始化方法必须调用<strong>自己</strong>的其它初始化方法(包括指定初始化方法以及其他的便利初始化方法)，不能调用 <code>super</code> 的初始化方法。</li>
+<li>如果子类提供了指定初始化方法，那么一定要实现所有父类的指定初始化方法。</li>
+</ul>
+<p>如果不遵守以上几条，编译器将会报 <code>warning</code>，由此可以规范化初始化方法，确保子类是调用的父类指定初始化方法，且不会出现循环的调用。</p>
+<p><img src="https://ws1.sinaimg.cn/large/8258d55bgy1fpepjroqa1j20cc0bd74t.jpg" alt=""></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>Apple 开发者文档： <a href="https://developer.apple.com/library/mac/releasenotes/ObjectiveC/ModernizationObjC/AdoptingModernObjective-C/AdoptingModernObjective-C.html#//apple_ref/doc/uid/TP40014150-CH1-SW8" target="_blank" rel="external">Object Initialization</a>, <a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/MultipleInitializers.html" target="_blank" rel="external">Multiple initializers</a></p>
+<p><a href="https://link.jianshu.com/?t=http://www.cnblogs.com/smileEvday/p/designated_initializer.html" target="_blank" rel="external">iOS: 聊聊 Designated Initializer（指定初始化函数）</a></p>
+<p><a href="https://link.jianshu.com/?t=http://blog.jobbole.com/65762/" target="_blank" rel="external">正确编写Designated Initializer的几个原则</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag"># Objective-C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/15/Cocoapods系列（二）公有篇/" rel="next" title="Cocoapods系列（二）公有篇">
+                <i class="fa fa-chevron-left"></i> Cocoapods系列（二）公有篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/me.png"
+                alt="Fuckinnng Dog" />
+            
+              <p class="site-author-name" itemprop="name">Fuckinnng Dog</p>
+              <p class="site-description motion-element" itemprop="description">Having you code clearly organized in a clean and defined manner is a way to show respect for yourself and other people that will read and change you code.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/developRen" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:jie_ios@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NS-DESIGNATED-INITIALIZER"><span class="nav-number">1.</span> <span class="nav-text">NS_DESIGNATED_INITIALIZER</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NSObject-中的-NS-DESIGNATED-INITIALIZER"><span class="nav-number">1.1.</span> <span class="nav-text">NSObject 中的 NS_DESIGNATED_INITIALIZER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AFNetworkReachabilityManager-中的-NS-DESIGNATED-INITIALIZER"><span class="nav-number">1.2.</span> <span class="nav-text">AFNetworkReachabilityManager 中的 NS_DESIGNATED_INITIALIZER</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发者文档中的描述"><span class="nav-number">2.</span> <span class="nav-text">开发者文档中的描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NS-DESIGNATED-INITIALIZER-使用方法"><span class="nav-number">3.</span> <span class="nav-text">NS_DESIGNATED_INITIALIZER 使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fuckinnng Dog</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
