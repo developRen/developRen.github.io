@@ -675,53 +675,6 @@ s" target="_blank" rel="external">“-相关命令” 列表</a><br><a href="htt
     </entry>
     
     <entry>
-      <title><![CDATA[循环引用的坑]]></title>
-      <url>/2017/08/07/%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E7%9A%84%E5%9D%91/</url>
-      <content type="html"><![CDATA[<p><img src="/2017/08/07/循环引用的坑/循环引用的坑.png" alt=""> </p>
-<a id="more"></a>
-<p>循环引用是iOS开发中经常遇到的问题，对App有潜在的危害，会使引起内存消耗过高，性能变差和Crash等问题。  </p>
-<h2 id="Delegate"><a href="#Delegate" class="headerlink" title="Delegate"></a>Delegate</h2><p>代理协议是一个最典型的场景，需要你使用弱引用来避免循环引用。ARC时代，需要将代理声明为weak是一个即好又安全的做法。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> &lt;myDelegate&gt; delegate;</div></pre></td></tr></table></figure>
-<h2 id="NSTimer"><a href="#NSTimer" class="headerlink" title="NSTimer"></a>NSTimer</h2><p>在退出控制器时关闭计时器。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    </div><div class="line">    _timer = [<span class="built_in">NSTimer</span> scheduledTimerWithTimeInterval:<span class="number">0.1</span></div><div class="line">                                              target:<span class="keyword">self</span></div><div class="line">                                            selector:<span class="keyword">@selector</span>(p_doSomeThing)</div><div class="line">                                            userInfo:<span class="literal">nil</span></div><div class="line">                                             repeats:<span class="literal">YES</span>];</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)p_doSomeThing &#123;</div><div class="line">    <span class="comment">// doSomeThing</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)p_stopDoSomeThing &#123;</div><div class="line">    [<span class="keyword">self</span>.timer invalidate];</div><div class="line">    <span class="keyword">self</span>.timer = <span class="literal">nil</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)dealloc &#123;</div><div class="line">     [<span class="keyword">self</span>.timer invalidate];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h2><p>采用weakSelf，内部不会有强类型的指针，就可以解决循环引用问题。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">__<span class="keyword">weak</span> __<span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span>;</div><div class="line"><span class="keyword">self</span>.callbackBlock = ^&#123;</div><div class="line">  [weakSelf doSomething];</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<h2 id="其他内存问题"><a href="#其他内存问题" class="headerlink" title="其他内存问题"></a>其他内存问题</h2><ul>
-<li><p>NSNotification addObserver之后，记得在dealloc里面添加remove;</p>
-</li>
-<li><p>动画的repeat count无限大，而且也不主动停止动画，基本就等于无限循环了;</p>
-</li>
-<li><p>forwardingTargetForSelector返回了self。</p>
-</li>
-</ul>
-<h2 id="内存解决思路："><a href="#内存解决思路：" class="headerlink" title="内存解决思路："></a>内存解决思路：</h2><ul>
-<li><p>通过Instruments来查看leaks</p>
-</li>
-<li><p>集成Facebook开源的FBRetainCycleDetector</p>
-</li>
-<li><p>集成MLeaksFinder</p>
-</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> Objective-C </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> OC </tag>
-            
-            <tag> 循环引用 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[剪不断理还乱,是架构]]></title>
       <url>/2017/08/03/%E6%8E%A2%E5%AF%BB%E6%9C%80%E9%80%82%E5%90%88%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%9E%B6%E6%9E%84/</url>
       <content type="html"><![CDATA[<p><img src="/2017/08/03/探寻最适合业务的架构/探寻最适合业务的架构.png" alt=""> </p>
@@ -831,39 +784,6 @@ s" target="_blank" rel="external">“-相关命令” 列表</a><br><a href="htt
         <tags>
             
             <tag> Cocoapods </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[OC和Swift的单例模式]]></title>
-      <url>/2017/07/06/OC%E5%92%8CSwift%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
-      <content type="html"><![CDATA[<p><img src="/2017/07/06/OC和Swift的单例模式/OC和Swift的单例模式.png" alt=""></p>
-<a id="more"></a>
-<p>单例模式是iOS开发中常用的设计模式，可以保证一个类只有一个对象实例。  </p>
-<p>在Objective-C中单例常用的写法：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Manager</span></span></div><div class="line">+ (<span class="keyword">instancetype</span>) shareManager &#123;</div><div class="line">    <span class="keyword">static</span> Manager* staticInstance = <span class="literal">nil</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</div><div class="line">        staticInstance = [[<span class="keyword">self</span> alloc] init];</div><div class="line">    &#125;) ;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> staticInstance;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>使用GCD中的dispatch_once_t可以保证里面的代码只被调用一次。  </p>
-<p>在Swift 3.0 单例推荐写法：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Manager</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">let</span> shared = <span class="type">Manager</span>()</div><div class="line">    <span class="keyword">private</span> <span class="keyword">init</span>()&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>static在Swift中表示 “类型范围作用域”，可以使用它来定义类型存储属性，类中的static属性拥有全局作用域和懒加载属性。<br>private关键字在Swift中表示“私有”。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 设计模式 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> OC </tag>
-            
-            <tag> Swift </tag>
-            
-            <tag> 单例 </tag>
             
         </tags>
         
