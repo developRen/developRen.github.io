@@ -353,8 +353,7 @@
 
       
         
-          
-            <h2 id="实例对象（instance对象）"><a href="#实例对象（instance对象）" class="headerlink" title="实例对象（instance对象）"></a>实例对象（instance对象）</h2><h3 id="NSObject对象创建时内存分配"><a href="#NSObject对象创建时内存分配" class="headerlink" title="NSObject对象创建时内存分配"></a>NSObject对象创建时内存分配</h3><p>NSObject的底层实现，实质上是一个结构体指针。</p>
+          <h2 id="实例对象（instance对象）"><a href="#实例对象（instance对象）" class="headerlink" title="实例对象（instance对象）"></a>实例对象（instance对象）</h2><h3 id="NSObject对象创建时内存分配"><a href="#NSObject对象创建时内存分配" class="headerlink" title="NSObject对象创建时内存分配"></a>NSObject对象创建时内存分配</h3><p>NSObject的底层实现，实质上是一个结构体指针。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">NSObject_IMPL</span> &#123;</span></div><div class="line">	Class isa;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>初始化一个NSObject对象</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSObject</span> *object = [[<span class="built_in">NSObject</span> alloc] init];</div></pre></td></tr></table></figure>
@@ -364,151 +363,13 @@
 <p>也可以通过LLDB指令读取内存</p>
 <p>获取内存大小请看<a href="#获取内存大小">这里</a></p>
 </blockquote>
-<h3 id="Student对象创建时内存分配"><a href="#Student对象创建时内存分配" class="headerlink" title="Student对象创建时内存分配"></a>Student对象创建时内存分配</h3><p>自定义一个继承NSObject类</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Student</span> : <span class="title">NSObject</span> </span>&#123;</div><div class="line">    <span class="keyword">@public</span></div><div class="line">    <span class="keyword">int</span> _no;</div><div class="line">    <span class="keyword">int</span> _age;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>转成C代码后</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student_IMPL</span> &#123;</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">NSObject_IMPL</span> <span class="title">NSObject_IVARS</span>;</span></div><div class="line">    <span class="keyword">int</span> _no;</div><div class="line">    <span class="keyword">int</span> _age;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">NSObject_IMPL</span> &#123;</span></div><div class="line">	Class isa;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>初始化一个Student对象，并赋值</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Student *stu = [[Student alloc] init];</div><div class="line">stu-&gt;_no = <span class="number">4</span>;</div><div class="line">stu-&gt;_age = <span class="number">5</span>;</div></pre></td></tr></table></figure>
-<p><code>[Student alloc]</code>会向内存申请16个字节，前8个字节存isa指针，后8个字节存自己的成员变量的值。</p>
-<h3 id="成员变量和属性的区别"><a href="#成员变量和属性的区别" class="headerlink" title="成员变量和属性的区别"></a>成员变量和属性的区别</h3><p>属性 = 成员变量（ivar） + setter方法 + getter方法</p>
-<p>⚠️对象内存中只存成员变量不存方法（无论是实例方法还是对象方法），方法每个实例对象都一样，所以只需要存一份，不放在对象内存中。</p>
-<h3 id="实例对象的内存布局图"><a href="#实例对象的内存布局图" class="headerlink" title="实例对象的内存布局图"></a>实例对象的内存布局图</h3><p>isa 指向其类对象，其余空间保存各级的 ivar（成员变量）</p>
-<p><img src="https://ws1.sinaimg.cn/large/8258d55bgy1fr519wdwa5j205z0ecq42.jpg" alt=""></p>
-<p>图片来自<a href="https://blog.csdn.net/xiaolinyeyi/article/details/51393383" target="_blank" rel="external">OC对象的内存布局</a></p>
-<h2 id="类对象（class对象）"><a href="#类对象（class对象）" class="headerlink" title="类对象（class对象）"></a>类对象（class对象）</h2><h3 id="获取类对象"><a href="#获取类对象" class="headerlink" title="获取类对象"></a>获取类对象</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSObject</span> *object1 = [[<span class="built_in">NSObject</span> alloc] init];</div><div class="line"><span class="comment">// 通过对象方法获取</span></div><div class="line">Class objectClass1 = [object1 <span class="keyword">class</span>];</div><div class="line"><span class="comment">// Runtime API</span></div><div class="line">Class objectClass2 = object_getClass(object1); </div><div class="line"><span class="comment">// 通过类方法获取</span></div><div class="line">Class objectClass3 = [<span class="built_in">NSObject</span> <span class="keyword">class</span>];</div></pre></td></tr></table></figure>
-<h3 id="类对象内存布局"><a href="#类对象内存布局" class="headerlink" title="类对象内存布局"></a>类对象内存布局</h3><p>每个类在内存中有且只有一个class对象</p>
-<p>class对象在内存中存储的信息主要包括：</p>
-<ul>
-<li>isa指针</li>
-<li>superclass指针</li>
-<li>类的属性信息（@property）、类的对象方法信息（instance method）</li>
-<li>类的协议信息（protocol）、类的成员变量信息（ivar）</li>
-<li>…</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 摘自objc4-723开源源码</span></div><div class="line"></div><div class="line"><span class="comment">/// Represents an instance of a class.</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_object</span> &#123;</span></div><div class="line">    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_class</span> :</span> objc_object &#123;</div><div class="line">    <span class="comment">// Class ISA;</span></div><div class="line">    Class superclass;</div><div class="line">    <span class="keyword">cache_t</span> cache;             <span class="comment">// formerly cache pointer and vtable(方法缓存)</span></div><div class="line">    <span class="keyword">class_data_bits_t</span> bits;    <span class="comment">// class_rw_t * plus custom rr/alloc flags（获取具体的类信息）</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">class_rw_t</span> &#123;</span></div><div class="line">    <span class="comment">// Be warned that Symbolication knows the layout of this structure.</span></div><div class="line">    <span class="keyword">uint32_t</span> flags;</div><div class="line">    <span class="keyword">uint32_t</span> version;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> <span class="keyword">class_ro_t</span> *ro;</div><div class="line"></div><div class="line">    <span class="keyword">method_array_t</span> methods;		    <span class="comment">// 方法列表</span></div><div class="line">    <span class="keyword">property_array_t</span> properties;	<span class="comment">// 属性列表</span></div><div class="line">    <span class="keyword">protocol_array_t</span> protocols;		<span class="comment">// 协议列表</span></div><div class="line"></div><div class="line">    Class firstSubclass;</div><div class="line">    Class nextSiblingClass;</div><div class="line"></div><div class="line">    <span class="keyword">char</span> *demangledName;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">class_ro_t</span> &#123;</span></div><div class="line">    <span class="keyword">uint32_t</span> flags;</div><div class="line">    <span class="keyword">uint32_t</span> instanceStart;</div><div class="line">    <span class="keyword">uint32_t</span> instanceSize;  <span class="comment">// 实例对象占用的内存大小</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __LP64__</span></div><div class="line">    <span class="keyword">uint32_t</span> reserved;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line">    <span class="keyword">const</span> <span class="keyword">uint8_t</span> * ivarLayout;</div><div class="line">    </div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> * name;</div><div class="line">    <span class="keyword">method_list_t</span> * baseMethodList;</div><div class="line">    <span class="keyword">protocol_list_t</span> * baseProtocols;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">ivar_list_t</span> * ivars;  <span class="comment">// 成员变量列表</span></div><div class="line"></div><div class="line">    <span class="keyword">const</span> <span class="keyword">uint8_t</span> * weakIvarLayout;</div><div class="line">    <span class="keyword">property_list_t</span> *baseProperties;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h3 id="类对象的内存布局图"><a href="#类对象的内存布局图" class="headerlink" title="类对象的内存布局图"></a>类对象的内存布局图</h3><p><img src="https://ws1.sinaimg.cn/large/8258d55bgy1fr73pruj5uj206b0bm0sq.jpg" alt=""></p>
-<h2 id="元类对象（meta-class对象）"><a href="#元类对象（meta-class对象）" class="headerlink" title="元类对象（meta-class对象）"></a>元类对象（meta-class对象）</h2><h3 id="获取元类方法"><a href="#获取元类方法" class="headerlink" title="获取元类方法"></a>获取元类方法</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Runtime API</span></div><div class="line">Class objectMetaClass = object_getClass([<span class="built_in">NSObject</span> <span class="keyword">class</span>]);</div><div class="line"><span class="comment">// ⚠️这种方式获取到的始终是类对象，而非原类对象</span></div><div class="line">Class objectMetaClass2 = [[[<span class="built_in">NSObject</span> <span class="keyword">class</span>] <span class="keyword">class</span>] <span class="keyword">class</span>];</div><div class="line"><span class="comment">// Runtime 还有一个函数可以判断是否是元类对象</span></div><div class="line">class_isMetaClass(objectMetaClass)</div></pre></td></tr></table></figure>
-<h3 id="元类对象"><a href="#元类对象" class="headerlink" title="元类对象"></a>元类对象</h3><p>每个类在内存中有且只有一个meta-class对象</p>
-<p>meta-class对象和class对象的内存结构是一样的，但是用途不一样，在内存中存储的信息主要包括：</p>
-<ul>
-<li>isa指针</li>
-<li>superclass指针</li>
-<li>类的类方法信息（class method）</li>
-<li>…</li>
-</ul>
-<h2 id="经典总结"><a href="#经典总结" class="headerlink" title="经典总结"></a>经典总结</h2><p><strong>1.instance的isa指向class</strong></p>
-<p><strong>2.class的isa指向meta-class</strong></p>
-<p><strong>3.meta-class的isa指向基类的meta-class</strong></p>
-<p><strong>4.class的superclass指向父类的class</strong></p>
-<blockquote>
-<p>如果没有父类，superclass指针为nil</p>
-</blockquote>
-<p><strong>5.meta-class的superclass指向父类的meta-class</strong></p>
-<blockquote>
-<p>基类的meta-class的superclass指向基类的class</p>
-</blockquote>
-<p><strong>6.instance调用对象方法的轨迹</strong></p>
-<blockquote>
-<p>isa找到class，方法不存在，就通过superclass找父类</p>
-</blockquote>
-<p><strong>7.class调用类方法的轨迹</strong></p>
-<blockquote>
-<p>isa找meta-class，方法不存在，就通过superclass找父类</p>
-</blockquote>
-<p><img src="https://ws1.sinaimg.cn/large/8258d55bgy1fr74nfi2g2j20ch0d1gn1.jpg" alt=""></p>
-<h2 id="内存相关"><a href="#内存相关" class="headerlink" title="内存相关"></a>内存相关</h2><h3 id="OC堆和栈"><a href="#OC堆和栈" class="headerlink" title="OC堆和栈"></a>OC堆和栈</h3><ul>
-<li>OC对象存放于堆里面(堆内存要程序员手动回收)</li>
-<li>非OC对象一般放在栈里面(栈内存会被系统自动回收)</li>
-</ul>
-<blockquote>
-<p>堆里面的内存是动态分配的，所以也就需要程序员手动的去添加内存、回收内存</p>
-<p>栈里面存放的是非对象的基本数据类型，堆内存存放着OC对象</p>
-</blockquote>
-<p>摘自<a href="https://www.jianshu.com/p/c8e1d91dda99" target="_blank" rel="external">iOS 堆和栈的区别</a></p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 实例化 object 对象</span></div><div class="line"><span class="built_in">NSObject</span> *object = [[<span class="built_in">NSObject</span> alloc] init];</div></pre></td></tr></table></figure>
-<p>object 指针存在栈区，指向的是堆区实例对象isa的地址。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Student</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSObject</span> *object;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Student</span></span></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">// 实例化 xiaoMing 对象</span></div><div class="line">Student *xiaoMing = [[Student alloc] init];</div><div class="line">xiaoMing.object = [[<span class="built_in">NSObject</span> alloc] init];</div></pre></td></tr></table></figure>
-<p>这时候 object 指针是存在堆区，因为 object 作为 Student 类的成员变量，在实例化后xiaoMing这个对象会存在堆区。也就是 object 指针会从堆区指向堆区。</p>
-<p><a href="https://blog.csdn.net/bryantsikilovia/article/details/46336957" target="_blank" rel="external">OC的指针是什么</a></p>
-<h3 id="isa"><a href="#isa" class="headerlink" title="isa"></a>isa</h3><p>无论是实例对象、类对象还是元类对象，都有isa指针，isa在方法调用起到至关重要的作用。</p>
-<blockquote>
-<p>OC的消息发送机制，给对象发送消息时没有对象方法和类方法之分。</p>
-</blockquote>
-<p><strong>实例对象的isa指向类对象的内存地址</strong></p>
-<ul>
-<li>当调用对象方法时，通过instance的isa找到class，最后找到对象方法的实现进行调用</li>
-</ul>
-<p><strong>类对象的isa指向元类对象的内存地址</strong></p>
-<ul>
-<li>当调用类方法时，通过class的isa找到meta-class，最后找到类方法的实现进行调用</li>
-</ul>
-<p><strong>元类对象的isa指向ROOT元类对象，ROOT元类对象的isa指向自己的内存地址</strong></p>
-<h4 id="isa计算"><a href="#isa计算" class="headerlink" title="isa计算"></a>isa计算</h4><p>从64bit开始，isa需要进行一次位运算（&amp; ISA_MASK），才能计算出真实地址</p>
-<blockquote>
-<p>即，实例对象的isa存的地址&amp; ISA_MASK，才能得出类对象的内存地址。</p>
-</blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 摘自objc4-723开源源码</span></div><div class="line"><span class="meta"># <span class="meta-keyword">if</span> __arm64__</span></div><div class="line"><span class="meta">#   <span class="meta-keyword">define</span> ISA_MASK        0x0000000ffffffff8ULL</span></div><div class="line"><span class="meta"># <span class="meta-keyword">elif</span> __x86_64__</span></div><div class="line"><span class="meta">#   <span class="meta-keyword">define</span> ISA_MASK        0x00007ffffffffff8ULL</span></div><div class="line"><span class="meta"># <span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
-<h3 id="SEL"><a href="#SEL" class="headerlink" title="SEL"></a>SEL</h3><h3 id="获取内存大小"><a href="#获取内存大小" class="headerlink" title="获取内存大小"></a>获取内存大小</h3><p><span id="获取内存大小"></span></p>
-<ul>
-<li>创建一个实例对象，至少需要多少内存</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;objc/runtime.h&gt;</span></span></div><div class="line">class_getInstanceSize([<span class="built_in">NSObject</span> <span class="keyword">class</span>]);</div></pre></td></tr></table></figure>
-<ul>
-<li>创建一个实例对象，实际上分配了多少内存</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;malloc/malloc.h&gt;</span></span></div><div class="line">malloc_size((__bridge <span class="keyword">const</span> <span class="keyword">void</span> *)obj);</div></pre></td></tr></table></figure>
-<ul>
-<li>获取一个表达式或类型的内存大小（在编译阶段已经完成计算）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sizeof(expression-or-type)</div></pre></td></tr></table></figure>
-<h2 id="底层研究"><a href="#底层研究" class="headerlink" title="底层研究"></a>底层研究</h2><h3 id="OC代码转成C-C-代码"><a href="#OC代码转成C-C-代码" class="headerlink" title="OC代码转成C/C++代码"></a>OC代码转成C/C++代码</h3><p>OC的底层实现是C和C++，在研究底层的对象时，需要转成C和C++代码，以便理解其原理。</p>
-<p><strong>将OC代码转成C/C++代码</strong></p>
-<ul>
-<li><p>用命令行工具定位到该OC代码文件</p>
-</li>
-<li><p>运行命令<code>clang -rewrite-objc main.m -o main.c</code></p>
-<blockquote>
-<p>mian.m为OC文件，main.c转成的C文件。如果要转成C++，就用cpp后缀，mian.cpp</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>将OC代码转成指定平台C/C++代码</strong></p>
-<ul>
-<li><p>用命令行工具定位到该OC代码文件</p>
-</li>
-<li><p>运行命令<code>xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc main.m -o mian-arm64.cpp</code></p>
-<blockquote>
-<p>模拟器(i386)、32bit(armv7)、64bit(arm64）</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="Apple开源源码地址"><a href="#Apple开源源码地址" class="headerlink" title="Apple开源源码地址"></a><a href="https://opensource.apple.com/tarballs" target="_blank" rel="external">Apple开源源码地址</a></h3><p>研究一些OC提供的数据类型/方法/…时，可以直接看源码。</p>
-<p>需要C++和C的基础。</p>
-<h3 id="LLDB常用指令"><a href="#LLDB常用指令" class="headerlink" title="LLDB常用指令"></a>LLDB常用指令</h3><p><a href="http://www.dreamingwish.com/article/lldb-usage-a.html" target="_blank" rel="external">LLDB使用篇</a></p>
-<h2 id="计算机组成原理"><a href="#计算机组成原理" class="headerlink" title="计算机组成原理"></a>计算机组成原理</h2><h3 id="位、字节、字、KB"><a href="#位、字节、字、KB" class="headerlink" title="位、字节、字、KB"></a>位、字节、字、KB</h3><ul>
-<li>位：”位(bit)”是电子计算机中最小的数据单位。每一位的状态只能是0或1。</li>
-<li>字节：8个二进制位构成1个”字节(Byte)”，它是存储空间的基本计量单位。1个字节可以储存1个英文字母或者半个汉字，换句话说，1个汉字占据2个字节的存储空间。</li>
-<li>字：”字”由若干个字节构成，字的位数叫做字长，不同档次的机器有不同的字长。例如一台8位机，它的1个字就等于1个字节，字长为8位。如果是一台16位机，那么，它的1个字就由2个字节构成，字长为16位。字是计算机进行数据处理和运算的单位。</li>
-<li>KB：1KB表示1K个Byte，也就是1024个字节。</li>
-</ul>
-<blockquote>
-<p>1KB = 1024 Bytes = 8192 Bits</p>
-<p>2个16进制“位” = 1个字节</p>
-</blockquote>
-<h3 id="小端模式-amp-大端模式"><a href="#小端模式-amp-大端模式" class="headerlink" title="小端模式&amp;大端模式"></a>小端模式&amp;大端模式</h3><p>举一个例子，比如数字0x12 34 56 78在内存中的表示形式为：</p>
-<p><strong>1)大端模式：</strong></p>
-<p>低地址 —————–&gt; 高地址<br>0x12  |  0x34  |  0x56  |  0x78</p>
-<p><strong>2)小端模式：</strong></p>
-<p>低地址 ——————&gt; 高地址<br>0x78  |  0x56  |  0x34  |  0x12</p>
-<p><strong><em>iOS是小端模式</em></strong></p>
-<p><a href="https://blog.csdn.net/holyjoy/article/details/37763467" target="_blank" rel="external">大端模式和小端模式</a>起源很有意思。</p>
-<h3 id="结构体内存对齐"><a href="#结构体内存对齐" class="headerlink" title="结构体内存对齐"></a>结构体内存对齐</h3><p>⚠️OC对象最少占用16个字节</p>
-<p>操作系统在分配内存时也会做对齐（iOS 在分配内存时16个字节的倍数，16，32，64…..256）</p>
-<p>iOS对齐系数16字节</p>
-<p><a href="https://www.zhihu.com/question/27862634" target="_blank" rel="external">如何理解 struct 的内存对齐？</a></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/11/OC对象内存学习笔记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

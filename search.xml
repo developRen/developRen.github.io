@@ -15,6 +15,7 @@
 <p>也可以通过LLDB指令读取内存</p>
 <p>获取内存大小请看<a href="#获取内存大小">这里</a></p>
 </blockquote>
+<a id="more"></a>
 <h3 id="Student对象创建时内存分配"><a href="#Student对象创建时内存分配" class="headerlink" title="Student对象创建时内存分配"></a>Student对象创建时内存分配</h3><p>自定义一个继承NSObject类</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Student</span> : <span class="title">NSObject</span> </span>&#123;</div><div class="line">    <span class="keyword">@public</span></div><div class="line">    <span class="keyword">int</span> _no;</div><div class="line">    <span class="keyword">int</span> _age;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>转成C代码后</p>
