@@ -86,7 +86,7 @@
 <meta property="og:url" content="https://developren.github.io/2018/06/14/Objectvie-C-Blocks-学习笔记/index.html">
 <meta property="og:site_name" content="一杰的博客">
 <meta property="og:description" content="什么是Blocks从语法上看Blocks是带有自动变量（局部变量）的匿名函数，从底层结构上看Blocks本质上也是封装了函数调用以及函数调用环境的OC对象。 匿名函数123void (^blockName)(void) = ^()&amp;#123;	NSLog(@&quot;I am block&quot;);&amp;#125;; 这是一个简单的Block，void (^blockName)(void) 声明了Block的返回值">
-<meta property="og:updated_time" content="2018-06-14T03:47:45.140Z">
+<meta property="og:updated_time" content="2018-06-14T03:49:55.121Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Objectvie - C Blocks 学习笔记">
 <meta name="twitter:description" content="什么是Blocks从语法上看Blocks是带有自动变量（局部变量）的匿名函数，从底层结构上看Blocks本质上也是封装了函数调用以及函数调用环境的OC对象。 匿名函数123void (^blockName)(void) = ^()&amp;#123;	NSLog(@&quot;I am block&quot;);&amp;#125;; 这是一个简单的Block，void (^blockName)(void) 声明了Block的返回值">
@@ -365,6 +365,7 @@
 <p>需要注意的是，不能直接在Block的实现中，给自动变量赋值，不然会报以下错误：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 变量不可分配(缺少__block类型说明符)</span></div><div class="line">Variable is not assignable (missing __block type specifier)</div></pre></td></tr></table></figure>
 <p>可以用<code>__block</code>说明符修饰自动变量，这时自动变量将会变Block内部的成员变量，并且进行内存管理，即可对其赋值，关于<code>__block</code>说明符具体介绍可见下文。</p>
+<a id="more"></a>
 <h2 id="Blocks底层结构"><a href="#Blocks底层结构" class="headerlink" title="Blocks底层结构"></a>Blocks底层结构</h2><p>我们可以使用clang(LLVM译码器)转换成C++源码，以此来窥探Block的实质。</p>
 <p>在命令行工具（我这里用的是iTerm2）来到指定目录，执行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc -fobjc-arc -fobjc-runtime=ios-11.0.0 main.m</div></pre></td></tr></table></figure>

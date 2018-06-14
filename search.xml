@@ -19,6 +19,7 @@
 <p>需要注意的是，不能直接在Block的实现中，给自动变量赋值，不然会报以下错误：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 变量不可分配(缺少__block类型说明符)</span></div><div class="line">Variable is not assignable (missing __block type specifier)</div></pre></td></tr></table></figure>
 <p>可以用<code>__block</code>说明符修饰自动变量，这时自动变量将会变Block内部的成员变量，并且进行内存管理，即可对其赋值，关于<code>__block</code>说明符具体介绍可见下文。</p>
+<a id="more"></a>
 <h2 id="Blocks底层结构"><a href="#Blocks底层结构" class="headerlink" title="Blocks底层结构"></a>Blocks底层结构</h2><p>我们可以使用clang(LLVM译码器)转换成C++源码，以此来窥探Block的实质。</p>
 <p>在命令行工具（我这里用的是iTerm2）来到指定目录，执行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc -fobjc-arc -fobjc-runtime=ios-11.0.0 main.m</div></pre></td></tr></table></figure>
