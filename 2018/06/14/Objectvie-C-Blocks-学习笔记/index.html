@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Objective-C," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是Blocks从语法上看Blocks是带有自动变量（局部变量）的匿名函数，从底层结构上看Blocks本质上也是封装了函数调用以及函数调用环境的OC对象。 匿名函数123void (^blockName)(void) = ^()&amp;#123;	NSLog(@&quot;I am block&quot;);&amp;#125;; 这是一个简单的Block，void (^blockName)(void) 声明了Block的返回值">
+<meta name="keywords" content="Objective-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Objectvie - C Blocks 学习笔记">
+<meta property="og:url" content="https://developren.github.io/2018/06/14/Objectvie-C-Blocks-学习笔记/index.html">
+<meta property="og:site_name" content="一杰的博客">
+<meta property="og:description" content="什么是Blocks从语法上看Blocks是带有自动变量（局部变量）的匿名函数，从底层结构上看Blocks本质上也是封装了函数调用以及函数调用环境的OC对象。 匿名函数123void (^blockName)(void) = ^()&amp;#123;	NSLog(@&quot;I am block&quot;);&amp;#125;; 这是一个简单的Block，void (^blockName)(void) 声明了Block的返回值">
+<meta property="og:updated_time" content="2018-06-14T03:47:45.140Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Objectvie - C Blocks 学习笔记">
+<meta name="twitter:description" content="什么是Blocks从语法上看Blocks是带有自动变量（局部变量）的匿名函数，从底层结构上看Blocks本质上也是封装了函数调用以及函数调用环境的OC对象。 匿名函数123void (^blockName)(void) = ^()&amp;#123;	NSLog(@&quot;I am block&quot;);&amp;#125;; 这是一个简单的Block，void (^blockName)(void) 声明了Block的返回值">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://developren.github.io/2018/06/14/Objectvie-C-Blocks-学习笔记/"/>
+
+
+
+
+
+  <title>Objectvie - C Blocks 学习笔记 | 一杰的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一杰的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://developren.github.io/2018/06/14/Objectvie-C-Blocks-学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fuckinnng Dog">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一杰的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Objectvie - C Blocks 学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-14T11:46:50+08:00">
+                2018-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是Blocks"><a href="#什么是Blocks" class="headerlink" title="什么是Blocks"></a>什么是Blocks</h2><p>从语法上看Blocks是带有自动变量（局部变量）的匿名函数，从底层结构上看Blocks本质上也是封装了函数调用以及函数调用环境的OC对象。</p>
+<h3 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> (^blockName)(<span class="keyword">void</span>) = ^()&#123;</div><div class="line">	<span class="built_in">NSLog</span>(<span class="string">@"I am block"</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这是一个简单的Block，<code>void (^blockName)(void)</code> 声明了Block的返回值/名称/参数，<code>^(){NSLog(@&quot;I am block&quot;);};</code>是Block的具体实现，可以看作是一个没有名称的函数，只是比函数多了一个<code>^</code>。</p>
+<h3 id="截获自动变量值"><a href="#截获自动变量值" class="headerlink" title="截获自动变量值"></a>截获自动变量值</h3><p>Block中，Block表达式截获所使用的自动变量的值，即保存该自动变量的瞬间值。因为Block表达式保存了自动变量的值，所以在执行Block语法后，即使改写Block中使用的自动变量的值也不会影响Block执行时自动变量的值。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> value = <span class="number">10</span>;</div><div class="line"><span class="keyword">void</span> (^blockName)(<span class="keyword">void</span>) = ^()&#123;</div><div class="line">	<span class="built_in">NSLog</span>(<span class="string">@"value = %d"</span>,value);</div><div class="line">&#125;;</div><div class="line">value = <span class="number">20</span>;</div><div class="line">blockName();</div><div class="line"></div><div class="line"><span class="comment">// 打印结果是10，而非20</span></div></pre></td></tr></table></figure>
+<p>“<strong><em>带有自动变量（局部变量）的匿名函数</em></strong>”的定义中，<strong>带有自动变量</strong>是指Block拥有捕获外部变量的功能，在Block中访问一个外部的自动变量时，Block会持用它的临时状态，自动捕获变量值，外部自动变量的变化不会影响它的的状态，所以打印结果是10，而非20。</p>
+<p>C语言中当我们声明一个局部变量不添加任何修饰符时，会默认变量为自动变量，相当于添加了<code>auto</code>关键字。这里需要区分自动变量和静态局部变量，静态变量会使用<code>static</code>做修饰。但只要是局部变量就会被截获到Block内部，但访问的方式不同（方式不同具体介绍可见下文）。</p>
+<blockquote>
+<p>自动变量属于动态存储类型，是在动态存储区内分配存储单元的，函数调用结束后存储单元即被释放。而静态局部变量是在静态存储区内分配内存单元，在程序的整个运行期间内都不释放空间。</p>
+<p>所以我们在重用<code>UITableViewCell</code>时，常常用静态局部变量修饰<code>CellIdentifier</code>。</p>
+</blockquote>
+<p>需要注意的是，不能直接在Block的实现中，给自动变量赋值，不然会报以下错误：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 变量不可分配(缺少__block类型说明符)</span></div><div class="line">Variable is not assignable (missing __block type specifier)</div></pre></td></tr></table></figure>
+<p>可以用<code>__block</code>说明符修饰自动变量，这时自动变量将会变Block内部的成员变量，并且进行内存管理，即可对其赋值，关于<code>__block</code>说明符具体介绍可见下文。</p>
+<h2 id="Blocks底层结构"><a href="#Blocks底层结构" class="headerlink" title="Blocks底层结构"></a>Blocks底层结构</h2><p>我们可以使用clang(LLVM译码器)转换成C++源码，以此来窥探Block的实质。</p>
+<p>在命令行工具（我这里用的是iTerm2）来到指定目录，执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc -fobjc-arc -fobjc-runtime=ios-11.0.0 main.m</div></pre></td></tr></table></figure>
+<p>译成iOS 11 arm64 架构下的C++源码。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 以最简单了Block为例</span></div><div class="line"><span class="keyword">void</span> (^myBlock)(<span class="keyword">void</span>) = ^()&#123;</div><div class="line">	<span class="built_in">NSLog</span>(<span class="string">@"I am Block"</span>);</div><div class="line">&#125;;</div><div class="line">myBlock();</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 最终转换成的 C++ 代码</span></div><div class="line"><span class="comment">// 已删除一些强制转换代码，Block无关代码转换成伪代码</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">block_impl</span> &#123;</span> 	<span class="comment">// Block结构体</span></div><div class="line">    <span class="keyword">void</span> *isa;		    <span class="comment">// isa 指针</span></div><div class="line">    <span class="keyword">int</span> Flags;			<span class="comment">// 默认为0</span></div><div class="line">    <span class="keyword">int</span> Reserved;		<span class="comment">// 保留字段，暂时没用，可能以后会用到</span></div><div class="line">    <span class="keyword">void</span> *FuncPtr;		<span class="comment">// 执行函数指针</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">main_block_impl_0</span> &#123;</span>  	<span class="comment">// myBlock 结构体,有意思的发现命名是从0开始递增，0、1、2...</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> __<span class="title">block_impl</span> <span class="title">impl</span>;</span>	<span class="comment">// C++ 特有语法，表示__main_block_impl_0拥有__block_impl4个成员变量</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> __<span class="title">main_block_desc_0</span>* <span class="title">Desc</span>;</span> <span class="comment">// myBlock 的描述信息</span></div><div class="line">    __main_block_impl_0(<span class="keyword">void</span> *fp, struct __main_block_desc_0 *desc, <span class="keyword">int</span> flags=<span class="number">0</span>) &#123; <span class="comment">// 构造函数</span></div><div class="line">        impl.isa = &amp;_NSConcreteStackBlock;  <span class="comment">// isa 指针赋值</span></div><div class="line">        impl.Flags = flags; <span class="comment">// 默认为0</span></div><div class="line">        impl.FuncPtr = fp;  <span class="comment">// 执行函数指针</span></div><div class="line">        Desc = desc; <span class="comment">// 描述信息</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// myBlock的执行函数，__cself相当于C++中的this，OC中的self，就想OC方法会自带self和_cmd</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(struct __main_block_impl_0 *__cself) &#123; </div><div class="line">    NSLog(@<span class="string">"I am Block"</span>); <span class="comment">// 源码并不是这样，但和文本讨论内容无关，所以可以理解为伪代码</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> __<span class="title">main_block_desc_0</span> &#123;</span> <span class="comment">// myBlock的描述</span></div><div class="line">    <span class="keyword">size_t</span> reserved;     <span class="comment">// 保留字段</span></div><div class="line">    <span class="keyword">size_t</span> Block_size;	 <span class="comment">// myBlock的内存大小</span></div><div class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(struct __main_block_impl_0)&#125;;</div><div class="line"></div><div class="line"><span class="comment">// myBlock的声明指向 __main_block_impl_0 结构体的内存地址</span></div><div class="line"><span class="comment">// __main_block_impl_0通过构造函数创建了一个myBlock对象</span></div><div class="line"><span class="keyword">void</span> (*myBlock)(<span class="keyword">void</span>) = &amp;__main_block_impl_0(</div><div class="line">                                             __main_block_func_0,      <span class="comment">// myBlock的执行函数地址</span></div><div class="line">                                             &amp;__main_block_desc_0_DATA <span class="comment">// myBlock的描述信息</span></div><div class="line">                                             );</div><div class="line"></div><div class="line"><span class="comment">// 调用时通过 myBlock 指针找到 __main_block_impl_0 中的执行函数指针，</span></div><div class="line"><span class="comment">// 执行函数指针找到函数的实现，再调用该函数，并且把自己作为参数传到函数内部</span></div><div class="line">myBlock-&gt;FuncPtr(myBlock);</div></pre></td></tr></table></figure>
+<p>有源码可以总结到Block实则为以下结构体</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">main_block_impl_0</span> &#123;</span></div><div class="line">    <span class="keyword">void</span> *isa;</div><div class="line">    <span class="keyword">int</span> Flags;</div><div class="line">    <span class="keyword">int</span> Reserved;</div><div class="line">    <span class="keyword">void</span> *FuncPtr;        </div><div class="line">    <span class="keyword">size_t</span> reserved;</div><div class="line">    <span class="keyword">size_t</span> Block_size;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>此<code>__main_block_impl_0</code>结构体相当于基于<code>objc_object</code>结构体的OC类对象(<a href="http://renyijie.top/2018/05/11/OC%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank" rel="external">OC对象内存学习笔记</a>可查看OC类对象内存结构)。就此，可以理解“<strong><em>Blocks本质上也是封装了函数调用以及函数调用环境的OC对象</em></strong>”定义中，<strong>Blocks本质是OC对象</strong>的说法了。<code>void *FuncPtr;</code>成员变量了Block执行函数的调用地址，所以<strong>封装了函数调用</strong>也不言而喻了。</p>
+<h3 id="截获变量值的本质"><a href="#截获变量值的本质" class="headerlink" title="截获变量值的本质"></a>截获变量值的本质</h3><p>上文中说到Block会截获所使用的自动变量的值，现在来具体看一下截获的本质。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> height = <span class="number">178</span>;  <span class="comment">// 全局变量</span></div><div class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</div><div class="line">    <span class="keyword">@autoreleasepool</span> &#123;</div><div class="line">        auto <span class="keyword">int</span> age = <span class="number">10</span>; 		<span class="comment">// 自动局部变量</span></div><div class="line">        <span class="keyword">static</span> <span class="keyword">int</span> number = <span class="number">10</span>;	 <span class="comment">// 静态局部变量</span></div><div class="line">        <span class="keyword">void</span> (^myBlock)(<span class="keyword">void</span>) = ^()&#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"my age = %d"</span>, age);        <span class="comment">// 访问外部自动局部变量</span></div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"my number = %d"</span>, number);  <span class="comment">// 访问外部静态局部变量</span></div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"my height = %d"</span>, height);  <span class="comment">// 访问外部全局变量</span></div><div class="line">        &#125;;</div><div class="line">        myBlock();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 最终转换成的 C++ 代码</span></div><div class="line"><span class="comment">// 已删除一些强制转换代码，Block无关代码转换成伪代码</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">main_block_impl_0</span> &#123;</span></div><div class="line">      <span class="class"><span class="keyword">struct</span> __<span class="title">block_impl</span> <span class="title">impl</span>;</span></div><div class="line">      <span class="class"><span class="keyword">struct</span> __<span class="title">main_block_desc_0</span>* <span class="title">Desc</span>;</span></div><div class="line">      <span class="keyword">int</span> age;      <span class="comment">// 保存外部的自动局部变量的值</span></div><div class="line">      <span class="keyword">int</span> *number;  <span class="comment">// 保存外部的静态局部变量的指针</span></div><div class="line">      __main_block_impl_0(<span class="keyword">void</span> *fp, struct __main_block_desc_0 *desc, <span class="keyword">int</span> _age, <span class="keyword">int</span> *_number, <span class="keyword">int</span> flags=<span class="number">0</span>) : age(_age), number(_number) &#123;</div><div class="line">          impl.isa = &amp;_NSConcreteStackBlock;</div><div class="line">          impl.Flags = flags;</div><div class="line">          impl.FuncPtr = fp;</div><div class="line">          Desc = desc;</div><div class="line">      &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">auto</span> <span class="keyword">int</span> age = <span class="number">10</span>;</div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> number = <span class="number">10</span>;</div><div class="line"><span class="keyword">void</span> (*myBlock)(<span class="keyword">void</span>) = &amp;__main_block_impl_0(</div><div class="line">    									  __main_block_func_0, </div><div class="line">                                             &amp;__main_block_desc_0_DATA, </div><div class="line">                                             age, </div><div class="line">                                             &amp;number</div><div class="line">                                             );</div><div class="line"></div><div class="line">myBlock-&gt;FuncPtr(myBlock);</div></pre></td></tr></table></figure>
+<p>首先我们注意到，Block语法表达式中使用的自动局部变量被作为成员变量追加到了__main_block_impl_0结构体中，而全局变量没有。并且自动局部变量保存的是值，而静态局部变量保存的是指针，想一想，静态局部变量并不会被销毁使用只需要保存地址，而自动局部变量有可能会在Block调用前已经销毁掉，所以需要保存其值。</p>
+<p><strong>截获变量值总结如下</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">变量类型</th>
+<th style="text-align:center">截获到Block内部</th>
+<th style="text-align:center">访问方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">自动局部变量（auto）</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center">值传递</td>
+</tr>
+<tr>
+<td style="text-align:center">静态局部变量（static）</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center">指针传递</td>
+</tr>
+<tr>
+<td style="text-align:center">全局变量</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center">直接访问</td>
+</tr>
+</tbody>
+</table>
+<h3 id="block说明符"><a href="#block说明符" class="headerlink" title="__block说明符"></a>__block说明符</h3><p>上文提到在Block中修改自动局部变量的值时，编译器就报警告，要求用__block说明符。</p>
+<p>首先来看一下允许Block中可以改写值的：</p>
+<ul>
+<li>局部静态变量</li>
+<li>静态全局变量</li>
+<li>全局变量</li>
+</ul>
+<p>静态全局变量和全局变量的访问和赋值，与Block外完全相同。但局部静态变量是截获其内存地址，通过内存地址来访问和赋值。</p>
+<p>由于自动局部变量会被截获到Block内部，并且Block结构体的就有一个成员变量来存储自动局部变量的值。我们先来看一下用__block修饰的自动局部变量被截获到内部后会怎么样。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">__block auto <span class="keyword">int</span> age = <span class="number">10</span>;     <span class="comment">// __block 修饰的自动局部变量</span></div><div class="line"><span class="keyword">void</span> (^myBlock)(<span class="keyword">void</span>) = ^()&#123;</div><div class="line">	<span class="keyword">int</span> value = age; 	<span class="comment">// 访问外部自动局部变量</span></div><div class="line">	age = <span class="number">30</span>;       	<span class="comment">// 给外部自动局部变量赋值</span></div><div class="line">&#125;;</div><div class="line">myBlock();</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 最终转换成的 C++ 代码</span></div><div class="line"><span class="comment">// 已删除一些强制转换代码，Block无关代码转换成伪代码</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">Block_byref_age_0</span> &#123;</span></div><div class="line">    <span class="keyword">void</span> *__isa; <span class="comment">// 指针 为0</span></div><div class="line">    __Block_byref_age_0 *__forwarding; <span class="comment">// __Block_byref_age_0实例的内存地址</span></div><div class="line">    <span class="keyword">int</span> __flags; <span class="comment">// 0</span></div><div class="line">    <span class="keyword">int</span> __size;  <span class="comment">// 内存大小</span></div><div class="line">    <span class="keyword">int</span> age;     <span class="comment">// age相当于原自动局部变量的成员变量</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">main_block_impl_0</span> &#123;</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> __<span class="title">block_impl</span> <span class="title">impl</span>;</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> __<span class="title">main_block_desc_0</span>* <span class="title">Desc</span>;</span></div><div class="line">    __Block_byref_age_0 *age; <span class="comment">// 该指针指向 __block变量的__Block_byref_age_0结构体实例</span></div><div class="line">    __main_block_impl_0(<span class="keyword">void</span> *fp, struct __main_block_desc_0 *desc, __Block_byref_age_0 *_age, <span class="keyword">int</span> flags=<span class="number">0</span>) : age(_age-&gt;__forwarding) &#123;</div><div class="line">        impl.isa = &amp;_NSConcreteStackBlock;</div><div class="line">        impl.Flags = flags;</div><div class="line">        impl.FuncPtr = fp;</div><div class="line">        Desc = desc;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</div><div class="line">    __Block_byref_age_0 *age = __cself-&gt;age;   <span class="comment">// 取出Block的age指针</span></div><div class="line">    <span class="keyword">int</span> value = (age-&gt;__forwarding-&gt;age);  <span class="comment">// 通过 __Block_byref_age_0 实例的__forwarding访问age</span></div><div class="line">    (age-&gt;__forwarding-&gt;age) = <span class="number">30</span>;         <span class="comment">// 因为 void *__isa 存的是0</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_copy_0(struct __main_block_impl_0*dst, struct __main_block_impl_0*src) &#123;_Block_object_assign((<span class="keyword">void</span>*)&amp;dst-&gt;age, (<span class="keyword">void</span>*)src-&gt;age, <span class="number">8</span><span class="comment">/*BLOCK_FIELD_IS_BYREF*/</span>);&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> __main_block_dispose_0(struct __main_block_impl_0*src) &#123;_Block_object_dispose((<span class="keyword">void</span>*)src-&gt;age, <span class="number">8</span><span class="comment">/*BLOCK_FIELD_IS_BYREF*/</span>);&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> __<span class="title">main_block_desc_0</span> &#123;</span></div><div class="line">    <span class="keyword">size_t</span> reserved;</div><div class="line">    <span class="keyword">size_t</span> Block_size;</div><div class="line">    <span class="keyword">void</span> (*copy)(struct __main_block_impl_0*, struct __main_block_impl_0*);</div><div class="line">    <span class="keyword">void</span> (*dispose)(struct __main_block_impl_0*);</div><div class="line">&#125; __main_block_desc_0_DATA = &#123; <span class="number">0</span>, <span class="keyword">sizeof</span>(struct __main_block_impl_0), __main_block_copy_0, __main_block_dispose_0&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 加了__block 后 age 成了结构体实例</span></div><div class="line"><span class="comment">// 该实例保存了 age的地址、初始值以及内存大小</span></div><div class="line">__attribute__((__blocks__(byref))) <span class="keyword">auto</span> __Block_byref_age_0 age = &#123;<span class="number">0</span>,</div><div class="line">            												   &amp;age,</div><div class="line">            												   <span class="number">0</span>,</div><div class="line">            												<span class="keyword">sizeof</span>(__Block_byref_age_0),</div><div class="line">                                                                   <span class="number">10</span>&#125;;</div><div class="line"><span class="comment">// Block内部将__Block_byref_age_0结构体实例作为成员变量保存</span></div><div class="line"><span class="keyword">void</span> (*myBlock)(<span class="keyword">void</span>) = &amp;__main_block_impl_0(__main_block_func_0,</div><div class="line">                                             &amp;__main_block_desc_0_DATA,</div><div class="line">                                             &amp;age,</div><div class="line">                                             <span class="number">570425344</span>));</div><div class="line">myBlock-&gt;FuncPtr(myBlock);</div></pre></td></tr></table></figure>
+<p>Block_byref_age_0 结构体实例的成员变量__forwarding持有指向该实例自身的指针，而isa赋值为0。</p>
+<h2 id="Blocks语法"><a href="#Blocks语法" class="headerlink" title="Blocks语法"></a>Blocks语法</h2><ul>
+<li><code>returnType</code> 表示返回的对象/关键字等(可以是void，并省略)</li>
+<li><code>blockName</code> 表示block的名称</li>
+<li><code>parameterTypes</code> 表示参数的类型(可以是void，并省略)</li>
+<li><code>parameters</code> 表示参数</li>
+</ul>
+<h3 id="作为局部变量"><a href="#作为局部变量" class="headerlink" title="作为局部变量"></a>作为局部变量</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 返回值类型(^名称)(参数的类型) = ^返回值类型(参数) &#123;...&#125;</span></div><div class="line">returnType (^blockName)(parameterTypes) = ^returnType(parameters) &#123;...&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 省略返回值类型 &amp; 参数的类型</span></div><div class="line"><span class="keyword">void</span> (^blockName)(<span class="keyword">void</span>) = ^<span class="keyword">void</span>(<span class="keyword">void</span>) &#123;...&#125;; </div><div class="line"><span class="comment">// 也可以省略block实现中的void，更加精简的写法</span></div><div class="line"><span class="keyword">void</span> (^blockName)(<span class="keyword">void</span>) = ^() &#123;...&#125;;</div></pre></td></tr></table></figure>
+<p><strong>For example</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 声明并实现一个局部变量Block</span></div><div class="line"><span class="keyword">int</span> (^addBlock)(<span class="keyword">int</span>, <span class="keyword">int</span>) = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b)&#123;</div><div class="line">    <span class="keyword">return</span> a + b;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 调用局部变量Block</span></div><div class="line"><span class="keyword">int</span> results = addBlock(<span class="number">1</span>,<span class="number">1</span>);</div></pre></td></tr></table></figure>
+<h3 id="作为属性"><a href="#作为属性" class="headerlink" title="作为属性"></a>作为属性</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 语法相当于作为局部变量时的声明，作为属性后升级为全局变量</span></div><div class="line"><span class="comment">// 返回值类型(^名称)(参数的类型)</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, nullability) returnType (^blockName)(parameterTypes);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：这里使用了<code>copy</code>修饰符，<a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#3-怎么用-copy-关键字" target="_blank" rel="external">why？</a></p>
+</blockquote>
+<p><strong>For example</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 将上一个例子中的局部变量升级为全局变量</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">nullable</span>) <span class="keyword">int</span> (^addBlock)(<span class="keyword">int</span>, <span class="keyword">int</span>);</div><div class="line"></div><div class="line"><span class="comment">// 实现全局变量</span></div><div class="line">_addBlock = ^<span class="keyword">int</span> (<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</div><div class="line">	<span class="keyword">return</span> a + b;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 调用局部变量Block</span></div><div class="line"><span class="keyword">int</span> results = addBlock(<span class="number">1</span>,<span class="number">1</span>);</div></pre></td></tr></table></figure>
+<h3 id="作为方法参数-方法调用的参数"><a href="#作为方法参数-方法调用的参数" class="headerlink" title="作为方法参数/方法调用的参数"></a>作为方法参数/方法调用的参数</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 返回值类型(^)(参数的类型) </span></div><div class="line">- (<span class="keyword">void</span>)someMethodThatTakesABlock:(returnType (^nullability)(parameterTypes))blockName;</div><div class="line"></div><div class="line"><span class="comment">// ^返回值类型(参数)</span></div><div class="line">[someObject someMethodThatTakesABlock:^returnType (parameters) &#123;...&#125;];</div></pre></td></tr></table></figure>
+<p><strong>For example</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 上一个例子中的属性，会自动生成一个Set方法</span></div><div class="line">- (<span class="keyword">void</span>)setAddBlock:(<span class="keyword">int</span> (^)(<span class="keyword">int</span>, <span class="keyword">int</span>))addBlock;</div><div class="line"></div><div class="line"><span class="comment">// 调用方法</span></div><div class="line">[<span class="keyword">self</span> setAddBlock:^<span class="keyword">int</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</div><div class="line">	<span class="keyword">return</span> a + b;</div><div class="line">&#125;];</div><div class="line"></div><div class="line"><span class="comment">// 可见在定义方法时，Block作为形参</span></div><div class="line"><span class="comment">// 在调用方法时，Block作为实参</span></div></pre></td></tr></table></figure>
+<h3 id="作为返回值"><a href="#作为返回值" class="headerlink" title="作为返回值"></a>作为返回值</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 返回值类型(^)(参数的类型)</span></div><div class="line">- (returnType(^nullability)(parameterTypes))methodName;</div></pre></td></tr></table></figure>
+<p><strong>For example</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 依旧是之前作为属性的Block</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="keyword">int</span>(^addBlock)(<span class="keyword">int</span>, <span class="keyword">int</span>);</div><div class="line"></div><div class="line"><span class="comment">// 该属性的 Get 方法</span></div><div class="line">- (<span class="keyword">int</span> (^)(<span class="keyword">int</span>, <span class="keyword">int</span>))addBlock &#123;</div><div class="line">    <span class="keyword">return</span> _addBlock;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>在链式编程时，核心就是将Block作为返回值，达到链式调用的效果。</p>
+</blockquote>
+<h3 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h3><blockquote>
+<p>typedef是C中的关键字，它的主要作用是给一个数据类型定义一个新的名称</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// typedef 返回值类型 (^类型名称)(参数类型);</span></div><div class="line"><span class="keyword">typedef</span> returnType (^TypeName)(parameterTypes);</div><div class="line"></div><div class="line"><span class="comment">// 类型名称 block名称 = ^返回值类型(参数) &#123;...&#125;;</span></div><div class="line">TypeName blockName = ^returnType(parameters) &#123;...&#125;;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>在Xcode中键入typedefBlock,即可快速生成语法 </p>
+</blockquote>
+<p><strong>For example</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 定义一个 Block 类型</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span>(^RYJAddBlock)(<span class="keyword">int</span> a, <span class="keyword">int</span> b);</div><div class="line"></div><div class="line"><span class="comment">// 声明 Block 属性</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) RYJAddBlock addBlock;</div><div class="line"></div><div class="line"><span class="comment">// 给_addBlock成员变量赋值</span></div><div class="line">_addBlock = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</div><div class="line">	<span class="keyword">return</span> a + b;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>⚠️在声明 Block 时往往只声明参数类型，但在一些知名第三方，以及Apple官方的一些写法中，会声明参数名称，个人认为这样会使代码更加便于阅读，所以建议在声明Block时声明完整的参数类型及其名称。</p>
+</blockquote>
+<h2 id="Block应用场景"><a href="#Block应用场景" class="headerlink" title="Block应用场景"></a>Block应用场景</h2><h3 id="事件回调"><a href="#事件回调" class="headerlink" title="事件回调"></a>事件回调</h3><h3 id="数据传递"><a href="#数据传递" class="headerlink" title="数据传递"></a>数据传递</h3><h3 id="链式语法"><a href="#链式语法" class="headerlink" title="链式语法"></a>链式语法</h3><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.amazon.cn/dp/B00DE60G3S/ref=sr_1_fkmr0_1?ie=UTF8&amp;qid=1528769313&amp;sr=8-1-fkmr0&amp;keywords=Objective-C+高级编程+iOS与OSX多线程和内存管理" target="_blank" rel="external">《Objective-C 高级编程 iOS与OSX多线程和内存管理》</a></p>
+<p><a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Blocks/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40007502-CH1-SW1" target="_blank" rel="external">《Blocks Programming Topics》</a></p>
+<p><a href="http://fuckingblocksyntax.com" target="_blank" rel="external">How Do I Declare A Block in Objective-C?</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag"># Objective-C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/11/OC对象内存学习笔记/" rel="next" title="OC对象内存学习笔记">
+                <i class="fa fa-chevron-left"></i> OC对象内存学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/me.png"
+                alt="Fuckinnng Dog" />
+            
+              <p class="site-author-name" itemprop="name">Fuckinnng Dog</p>
+              <p class="site-description motion-element" itemprop="description">Having you code clearly organized in a clean and defined manner is a way to show respect for yourself and other people that will read and change you code.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/developRen" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:jie_ios@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Blocks"><span class="nav-number">1.</span> <span class="nav-text">什么是Blocks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#匿名函数"><span class="nav-number">1.1.</span> <span class="nav-text">匿名函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#截获自动变量值"><span class="nav-number">1.2.</span> <span class="nav-text">截获自动变量值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blocks底层结构"><span class="nav-number">2.</span> <span class="nav-text">Blocks底层结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#截获变量值的本质"><span class="nav-number">2.1.</span> <span class="nav-text">截获变量值的本质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#block说明符"><span class="nav-number">2.2.</span> <span class="nav-text">__block说明符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blocks语法"><span class="nav-number">3.</span> <span class="nav-text">Blocks语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作为局部变量"><span class="nav-number">3.1.</span> <span class="nav-text">作为局部变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作为属性"><span class="nav-number">3.2.</span> <span class="nav-text">作为属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作为方法参数-方法调用的参数"><span class="nav-number">3.3.</span> <span class="nav-text">作为方法参数/方法调用的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作为返回值"><span class="nav-number">3.4.</span> <span class="nav-text">作为返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#typedef"><span class="nav-number">3.5.</span> <span class="nav-text">typedef</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Block应用场景"><span class="nav-number">4.</span> <span class="nav-text">Block应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件回调"><span class="nav-number">4.1.</span> <span class="nav-text">事件回调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据传递"><span class="nav-number">4.2.</span> <span class="nav-text">数据传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链式语法"><span class="nav-number">4.3.</span> <span class="nav-text">链式语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fuckinnng Dog</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
