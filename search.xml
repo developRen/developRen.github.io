@@ -4,7 +4,7 @@
     
     <entry>
       <title><![CDATA[Objectvie - C Blocks 学习笔记]]></title>
-      <url>/2018/06/14/Objectvie-C-Blocks-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      <url>/2018/06/14/OC-Blocks-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<h2 id="什么是Blocks"><a href="#什么是Blocks" class="headerlink" title="什么是Blocks"></a>什么是Blocks</h2><p>从语法上看Blocks是带有自动变量（局部变量）的匿名函数，从底层结构上看Blocks本质上也是封装了函数调用以及函数调用环境的OC对象。</p>
 <h3 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> (^blockName)(<span class="keyword">void</span>) = ^()&#123;</div><div class="line">	<span class="built_in">NSLog</span>(<span class="string">@"I am block"</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>这是一个简单的Block，<code>void (^blockName)(void)</code> 声明了Block的返回值/名称/参数，<code>^(){NSLog(@&quot;I am block&quot;);};</code>是Block的具体实现，可以看作是一个没有名称的函数，只是比函数多了一个<code>^</code>。</p>
